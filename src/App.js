@@ -2,9 +2,13 @@ import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
 import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
-import { BrowserRouter as Router, Switch, Route, useNavigate, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useNavigate, Link, Routes } from 'react-router-dom';
 import './App.scss';
 import axios from 'axios';
+import Detail from './route/Detail';
+import MyPage from './route/MyPage';
+import Cart from './route/Cart';
+import Like from './route/Like';
 
 function App() {
 
@@ -14,21 +18,27 @@ function App() {
     <div className="App">
       <header className='navbar'>
         <section className='login'>
-          <Link to="/signup">회원가입</Link>
-          <Link to="/login">로그인</Link>
+          <Link to="/signup" className='mya'>회원가입</Link>
+          <Link to="/login" className='mya'>로그인</Link>
         </section>
         <Container>
           <Navbar.Brand href="#home">SummerMart</Navbar.Brand>
           <input className='searchInput' type="text" placeholder="검색어를 입력해 주세요"></input>
           <Row>
             <Col>
-              <img src={process.env.PUBLIC_URL + '/img/heart.png'}></img>
+              <Link to="/mypage/like">
+                <img src={process.env.PUBLIC_URL + '/img/like.png'}></img>
+              </Link>
             </Col>
             <Col>
-              <img src={process.env.PUBLIC_URL + '/img/cart.png'}></img>
+              <Link to="/cart">
+                <img src={process.env.PUBLIC_URL + '/img/cart.png'}></img>
+              </Link>
             </Col>
             <Col>
-              <img src={process.env.PUBLIC_URL + '/img/user.png'}></img>
+              <Link to="/mypage">
+                <img src={process.env.PUBLIC_URL + '/img/user.png'}></img>
+              </Link>
             </Col>
           </Row>
         </Container>
@@ -36,16 +46,16 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link onClick={() => {
               navigate('/')
-            }} className='bar'>홈</Nav.Link>
+            }} className='bar mya' >홈</Nav.Link>
             <Nav.Link onClick={() => {
-              navigate('/detail/0')
-            }} className='bar'>베스트</Nav.Link>
+              navigate('/best')
+            }} className='bar mya'>베스트</Nav.Link>
             <Nav.Link onClick={() => {
-              navigate('/about')
-            }} className='bar'>특가</Nav.Link>
+              navigate('/special')
+            }} className='bar mya'>특가</Nav.Link>
             <Nav.Link onClick={() => {
-              navigate('/about')
-            }} className='bar'>여름이벤트</Nav.Link>
+              navigate('/event')
+            }} className='bar mya'>여름이벤트</Nav.Link>
           </Nav>
           <div className='rank'>
             1. 펩시제로
@@ -53,6 +63,31 @@ function App() {
           </div>
         </Container>
       </header>
+
+      <Routes>
+        <Route path="/detail/:id/" element={
+          <Detail></Detail>
+        }></Route>
+        <Route path="/mypage" element={
+          <MyPage></MyPage>
+          
+        }>
+          <Route path="like" element={
+            <Like></Like>
+          }></Route>
+        </Route>
+        <Route path="/cart" element={
+          <Cart></Cart>
+        }></Route>
+      </Routes>
+
+      <div className='temporary'>
+        <Link to={"/detail/" + 0}>
+          {/* TODO : 0자리에 데이터에서 id값 받아오기 */}
+          <img style={{ height : '345px' }} src={process.env.PUBLIC_URL + '/img/fan.jpg'}></img>
+        </Link>
+      </div>
+
     </div>
   );
 }
