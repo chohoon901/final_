@@ -5,8 +5,10 @@ function Like() {
 
     
     return (
-        <div>
-            <h1>Like</h1>
+        <div className='myLike'>
+            <div className='header'>
+              <h1>찜한 상품 (0)</h1>
+            </div>
         </div>
     )
 }

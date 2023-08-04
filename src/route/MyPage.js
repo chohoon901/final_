@@ -1,12 +1,13 @@
-import { Link, Outlet, Route, Routes } from 'react-router-dom';
+import { Link, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import './style/MyPage.scss'
 import { MdOutlineArrowForwardIos } from "react-icons/md"
 import Like from './Like';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function MyPage() {
 
     const [activeItem, setActiveItem] = useState(null);
+    const [likeswitch, setLikeswitch] = useState('');
 
     const handleItemClick = (page) => {
         setActiveItem(page);
@@ -21,14 +22,12 @@ function MyPage() {
                     <div className='mypageNav'>
                         <ul>
                             <NavbarItem page={'/mypage/order'} title={'주문내역'} 
-                            activeItem={activeItem}
-                            onClick={handleItemClick}/>
+                            setLikeswitch={setLikeswitch}/>
                             <NavbarItem page={'/mypage/like'} title={'찜한상품'} 
-                            activeItem={activeItem}
-                            onClick={handleItemClick}/>
-                            <NavbarItem page={'/mypage/modify'} title={'정보수정'} 
-                            activeItem={activeItem}
-                            onClick={handleItemClick}/>
+                            setLikeswitch={setLikeswitch}/>
+                            <NavbarItem page={'/mypage/modify'} title={'정보수정'}
+                            likeswitch={likeswitch} 
+                            setLikeswitch={setLikeswitch}/>
                         </ul>
                     </div>
                 </div>
@@ -39,13 +38,33 @@ function MyPage() {
     )
 }
 
-function NavbarItem(props) {
-    const { page, title, activeItem, onClick } = props;
-    const isActive = activeItem === page;
+function NavbarItem({ page, title, setLikeswitch, likeswitch }) {
+    const location = useLocation();
+    const isActive = location.pathname.split('/')[2] == page.split('/')[2]
+
+    useEffect(() => {
+        if (isActive) {
+          setLikeswitch('active');
+        } else {
+          setLikeswitch('disabled');
+        }
+    }, [isActive, setLikeswitch]);
 
     return (
         <li style={{ listStyleType: 'none' }} className={isActive ? 'active' : ''}>
-          <Link to={page} onClick={() => onClick(page)}>
+          <Link to={page}>
+            <span>{title}</span>
+            <MdOutlineArrowForwardIos size='12' color='rgb(1, 72, 225)'/>
+          </Link>
+        </li>
+    )
+}
+
+function Pre({isActive, setLikeswitch, page, title}) {
+
+    return (
+        <li className={isActive ? 'active' : ''}>
+            <Link to={page}>
             <span>{title}</span>
             <MdOutlineArrowForwardIos size='12' color='rgb(1, 72, 225)'/>
           </Link>
