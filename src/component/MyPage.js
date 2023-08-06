@@ -1,17 +1,12 @@
 import { Link, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import './style/MyPage.scss'
 import { MdOutlineArrowForwardIos } from "react-icons/md"
-import Like from './Like';
-import { useEffect, useState } from 'react';
+import Like from '../route/Like';
+import React, { useEffect, useState } from 'react';
 
 function MyPage() {
 
-    const [activeItem, setActiveItem] = useState(null);
     const [likeswitch, setLikeswitch] = useState('');
-
-    const handleItemClick = (page) => {
-        setActiveItem(page);
-    };
     
     return (
         <>
@@ -26,7 +21,6 @@ function MyPage() {
                             <NavbarItem page={'/mypage/like'} title={'찜한상품'} 
                             setLikeswitch={setLikeswitch}/>
                             <NavbarItem page={'/mypage/modify'} title={'정보수정'}
-                            likeswitch={likeswitch} 
                             setLikeswitch={setLikeswitch}/>
                         </ul>
                     </div>
@@ -38,7 +32,7 @@ function MyPage() {
     )
 }
 
-function NavbarItem({ page, title, setLikeswitch, likeswitch }) {
+function NavbarItem({ page, title, setLikeswitch }) {
     const location = useLocation();
     const isActive = location.pathname.split('/')[2] == page.split('/')[2]
 
@@ -59,17 +53,4 @@ function NavbarItem({ page, title, setLikeswitch, likeswitch }) {
         </li>
     )
 }
-
-function Pre({isActive, setLikeswitch, page, title}) {
-
-    return (
-        <li className={isActive ? 'active' : ''}>
-            <Link to={page}>
-            <span>{title}</span>
-            <MdOutlineArrowForwardIos size='12' color='rgb(1, 72, 225)'/>
-          </Link>
-        </li>
-    )
-}
-
 export default MyPage;

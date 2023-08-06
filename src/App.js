@@ -6,9 +6,11 @@ import { BrowserRouter as Router, Switch, Route, useNavigate, Link, Routes } fro
 import './App.scss';
 import axios from 'axios';
 import Detail from './route/Detail';
-import MyPage from './route/MyPage';
+import MyPage from './component/MyPage';
 import Cart from './route/Cart';
 import Like from './route/Like';
+import Best from './route/Best';
+import Special from './route/Special';
 
 function App() {
 
@@ -17,10 +19,12 @@ function App() {
   return (
     <div className="App">
       <header className='navbar'>
-        <section className='login'>
-          <Link to="/signup" className='mya'>회원가입</Link>
-          <Link to="/login" className='mya'>로그인</Link>
-        </section>
+        <Container>
+          <section className='login'>
+            <Link to="/signup" className='mya'>회원가입</ Link>
+            <Link to="/login" className='mya'>로그인</Link>
+          </section>
+        </Container>
         <Container>
           <Navbar.Brand href="#home">SummerMart</Navbar.Brand>
           <input className='searchInput' type="text" placeholder="검색어를 입력해 주세요"></input>
@@ -65,12 +69,17 @@ function App() {
       </header>
 
       <Routes>
+        <Route path="/best" element={
+          <Best></Best>
+        }></Route>
+        <Route path="/special" element={
+          <Special></Special>
+        }></Route>
         <Route path="/detail/:id/" element={
           <Detail></Detail>
         }></Route>
         <Route path="/mypage" element={
           <MyPage></MyPage>
-          
         }>
           <Route path="like" element={
             <Like></Like>

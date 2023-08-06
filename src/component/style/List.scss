@@ -1,0 +1,24 @@
+.row {
+    margin-left: 2rem;
+    .listTitle {
+        display: flex;
+        justify-content: flex-start;
+        border-bottom: 2px solid rgb(51, 51, 51);
+        margin-top: 2rem;
+        padding-bottom: 1rem;
+        h2{
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: rgb(51, 51, 51);
+        }
+    }
+    .nav-link {
+        margin-top: 2rem;
+        color: #000000;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    .content {
+        margin-top: 2rem;
+    }
+}
