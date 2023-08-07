@@ -5,16 +5,21 @@ import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route, useNavigate, Link, Routes } from 'react-router-dom';
 import './App.scss';
 import axios from 'axios';
+
+
 import Login from './Login/Login.jsx';
+import Signup from './Signup/Signup.jsx';
 
 function App() {
 
   let navigate = useNavigate()
 
   return (
-    <div className="App">
+    <div className="App" style={{width:'100%'}}>
       <header className='navbar'>
         <section className='login'>
+
+
           <Link to="/signup">회원가입</Link>
           <Link to="/login">로그인</Link>
         </section>
@@ -55,19 +60,16 @@ function App() {
         </Container>
       </header>
 
-      <Router>
-        
-          <h1>로그인</h1>
-          
-
-        
-      </Router>
-
+            <Routes>
+              <Route path='login' element={<Login />} />
+              <Route path='signup' element={<Signup />} />
+            </Routes>
 
 
     </div>
   );
 }
+
 
 
 export default App;
