@@ -1,0 +1,57 @@
+.col-md-1 {
+    img {
+        width : 27px;
+        height : auto;
+    }
+}
+
+.left-align {
+    text-align: left;
+}
+
+.strikethrough-text {
+    text-decoration: line-through;
+}
+
+.line-divider {
+    border: 1px solid black;
+    margin: 20px 0; /* 원하는 여백 조정 */
+}
+
+.bold-marginright {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #00be23;
+}
+
+.marginright {
+    margin-right: 10px;
+    color: #18cf39;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.count {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+input {
+    margin-left: 20px;
+    width : 50px;
+    text-align: center;
+}
+
+.align {
+    align-items: center;
+}
+
+.no-radius {
+    width: 15vw;
+    border-radius: 0px;
+    border: 1px solid rgb(42, 198, 255);
+}

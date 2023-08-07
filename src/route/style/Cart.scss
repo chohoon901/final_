@@ -1,0 +1,30 @@
+.myCart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 4rem;
+    .header {
+        display: flex;
+        justify-content: flex-start;
+        border-bottom: 2px solid rgb(51, 51, 51);
+        padding-bottom: 1rem;
+        z-index: 200;
+        h1 {
+          font-size: 1.4rem;
+          font-weight: 800;
+          color: rgb(51, 51, 51);
+        }
+    }
+    .body {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+}
+
+.result {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border: 1px solid rgb(208, 208, 208);
+}
