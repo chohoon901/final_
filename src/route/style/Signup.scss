@@ -1,0 +1,54 @@
+.signup {
+    padding-top: 50px;
+    box-sizing: border-box;
+    width: 100%; 
+    min-height: 80vh;
+    height: auto;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 60px;
+    border-bottom: 2px solid rgb(51, 51, 51);
+    padding-bottom: 40px;
+    width: 35%;
+    box-sizing: border-box;
+  }
+  
+  .header h1 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: rgb(51, 51, 51);
+  }
+  
+  .form {
+    width: 600px;
+    padding: 40px;
+    // border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+  }
+  
+  .formGroup {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    font-size: 15px;
+  }
+
+  .formGroup label {
+    width: 100px;
+    margin-right: 50px;
+  }
+
+  .formGroup input {
+    flex: 1;
+    padding: 10px;
+    font-size: 16px;
+  }
+
+

@@ -5,12 +5,19 @@ import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route, useNavigate, Link, Routes } from 'react-router-dom';
 import './App.scss';
 import axios from 'axios';
+
+
 import Detail from './route/Detail';
 import MyPage from './component/MyPage';
 import Cart from './route/Cart';
 import Like from './route/Like';
 import Best from './route/Best';
 import Special from './route/Special';
+import Order from './route/Order';
+import Info from './route/Info';
+import Login from './route/Login';
+import Signup from './route/Signup';
+
 
 function App() {
 
@@ -69,6 +76,12 @@ function App() {
       </header>
 
       <Routes>
+        <Route path="/login" element={
+          <Login></Login>
+        }></Route>
+        <Route path="/signup" element={
+          <Signup></Signup>
+        }></Route>
         <Route path="/best" element={
           <Best></Best>
         }></Route>
@@ -81,9 +94,15 @@ function App() {
         <Route path="/mypage" element={
           <MyPage></MyPage>
         }>
-          <Route path="like" element={
-            <Like></Like>
-          }></Route>
+            <Route path="order" element={
+              <Order></Order>
+            }></Route>
+            <Route path="like" element={
+              <Like></Like>
+            }></Route>
+            <Route path="info" element={
+              <Info></Info>
+            }></Route>
         </Route>
         <Route path="/cart" element={
           <Cart></Cart>

@@ -4,6 +4,7 @@ import { MdOutlineArrowForwardIos } from "react-icons/md"
 import Like from '../route/Like';
 import React, { useEffect, useState } from 'react';
 
+
 function MyPage() {
 
     const [likeswitch, setLikeswitch] = useState('');
@@ -18,9 +19,11 @@ function MyPage() {
                         <ul>
                             <NavbarItem page={'/mypage/order'} title={'주문내역'} 
                             setLikeswitch={setLikeswitch}/>
+                            <NavbarItem page={'/mypage/coupon'} title={'내 쿠폰'}
+                            setLikeswitch={setLikeswitch}/>
                             <NavbarItem page={'/mypage/like'} title={'찜한상품'} 
                             setLikeswitch={setLikeswitch}/>
-                            <NavbarItem page={'/mypage/modify'} title={'정보수정'}
+                            <NavbarItem page={'/mypage/info'} title={'정보수정'}
                             setLikeswitch={setLikeswitch}/>
                         </ul>
                     </div>
