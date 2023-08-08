@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import style from './Signup.module.scss';
-import Button from './Button.jsx';
+import '../route/style/Signup.scss';
+import Button from '../component/Button';
 
 export default function Signup() {
   return (
-    <div className={style.signup}>
-      <div className={style.header}>
+    <div className='signup'>
+      <div className='header'>
         <h1>회원가입</h1>
       </div>
-      <form className={style.form}>
-        <div className={style.formGroup}>
+      <form className='form'>
+        <div className='formGroup'>
           <label htmlFor="email">이메일</label>
           <input
             name="email"
@@ -18,7 +18,7 @@ export default function Signup() {
             type="email"
           />
         </div>
-        <div className={style.formGroup}>
+        <div className='formGroup'>
           <label htmlFor="password">비밀번호</label>
           <input
             name="password"
@@ -27,7 +27,7 @@ export default function Signup() {
             type="password"
           />
         </div>
-        <div className={style.formGroup}>
+        <div className='formGroup'>
           <label htmlFor="checkpassword">비밀번호 확인</label>
           <input
             name="checkpassword"
@@ -36,7 +36,7 @@ export default function Signup() {
             type="password"
           />
         </div>
-        <div className={style.formGroup}>
+        <div className='formGroup'>
           <label htmlFor="displayName">이름</label>
           <input
             name="displayName"
@@ -44,7 +44,7 @@ export default function Signup() {
             placeholder="이름을 입력해주세요"
           />
         </div>
-        <div className={style.formGroup}>
+        <div className='formGroup'>
           <label htmlFor="phone">휴대폰번호</label>
           <input
             name="phone"
@@ -53,7 +53,7 @@ export default function Signup() {
             type="tel"
           />
         </div>
-        <section className={style.btn}>
+        <section className='btn'>
           <Button name="가입하기" form="signup" type="submit" isPurple={true} width="100%" />
         </section>
       </form>
