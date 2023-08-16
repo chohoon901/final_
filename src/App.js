@@ -17,6 +17,7 @@ import Order from './route/Order';
 import Info from './route/Info';
 import Login from './route/Login';
 import Signup from './route/Signup';
+import Pay from './route/Pay';
 
 
 function App() {
@@ -76,6 +77,9 @@ function App() {
       </header>
 
       <Routes>
+        <Route path="/pay" element={
+          <Pay></Pay>
+        }></Route>
         <Route path="/login" element={
           <Login></Login>
         }></Route>

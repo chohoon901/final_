@@ -10,12 +10,12 @@ export default function Signup() {
       </div>
       <form className='form'>
         <div className='formGroup'>
-          <label htmlFor="email">이메일</label>
+          <label htmlFor="id">아이디</label>
           <input
-            name="email"
+            name="id"
             required
-            placeholder="이메일을 입력해주세요"
-            type="email"
+            placeholder="아이디를 입력해주세요"
+            type="text"
           />
         </div>
         <div className='formGroup'>

@@ -67,7 +67,9 @@ function Detail() {
                     <h6>19,990\</h6>
                 </div>
                 <button className="btn btn-light no-radius" style={{ marginRight: '10px' }}>장바구니</button> 
-                <button className="btn btn-info no-radius">구매하기</button> 
+                <button className="btn btn-info no-radius" onClick={() => {
+                  window.location.href="/pay"
+                }}>구매하기</button> 
                 
               </div>
               <div className="col-md-1">
