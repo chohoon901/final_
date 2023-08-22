@@ -50,6 +50,18 @@
 },
 {
     "no": 7,
+    "describe": "찜에서 상품 상세페이지 물건 가져오기(찜하기)",
+    "method": "post",
+    "function": ["findById", "save"],
+    "db": "myLike",
+    "body": {
+        "name": "myLike.getProduct.getName",
+        "price": "myLike.getProduct.getPrice",
+        "picture": "myLike.getProduct.getPicture"
+    }
+},
+{
+    "no": 7,
     "describe": "찜에서 장바구니 담기",
     "method": "post",
     "function": ["findById","save"],
@@ -158,6 +170,20 @@
         "price": "",
         "picture": "",
         "count": 1
+    }
+},
+{
+    "no": 14,
+    "describe": "상품 상세페이지에서 찜 담기(찜하기)",
+    "method": "post",
+    "function": ["findById", "save"],
+    "db": "product",
+    "body": {
+        "memberId": "loginId",
+
+        "name": "",
+        "price": "",
+        "picture": ""
     }
 },
 {

@@ -40,6 +40,7 @@ export default function Login () {
     if (jwtToken.status === 200) {
       console.log(2, jwtToken.headers.authorization);
       localStorage.setItem("jwtToken", jwtToken.headers.authorization);
+      window.location.replace("http://localhost:3000/")
     }
   }
   
