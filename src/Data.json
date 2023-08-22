@@ -1,0 +1,240 @@
+[{
+    "no": 4, 
+    "describe": "구매완료 상품목록",
+    "method": "get",
+    "function": "findAll",
+    "db": "orderProduct",
+    "body": {
+        "name": "orderProduct.getProduct.getName",
+        "orderPrice": "",
+        "count": "",
+        "deliveryStatus": "orderProduct.getOrder.getDeliveryStatus",
+        "data": "orderProduct.getOrder.getDate"
+    }
+},
+{
+    "no": 4,
+    "describe": "구매취소",
+    "method": "patch",
+    "function": "save",
+    "db": "order",
+    "body": {
+        "orderStatus": ""
+    }
+},
+{
+    "no": 5,
+    "describe": "정보수정",
+    "method": "patch",
+    "function": "save",
+    "db": "member",
+    "body": {
+        "memberId": "",
+        "password": "",
+        "address": "",
+        "name": "",
+        "phone": ""
+    }
+},
+{
+    "no": 7,
+    "describe": "찜 목록 조회",
+    "method": "get",
+    "function": "findAll",
+    "db": "myLike",
+    "body": {
+        "name": "myLike.getProduct.getName",
+        "price": "myLike.getProduct.getPrice",
+        "picture": "myLike.getProduct.getPicture"
+    }
+},
+{
+    "no": 7,
+    "describe": "찜에서 상품 상세페이지 물건 가져오기(찜하기)",
+    "method": "post",
+    "function": ["findById", "save"],
+    "db": "myLike",
+    "body": {
+        "name": "myLike.getProduct.getName",
+        "price": "myLike.getProduct.getPrice",
+        "picture": "myLike.getProduct.getPicture"
+    }
+},
+{
+    "no": 7,
+    "describe": "찜에서 장바구니 담기",
+    "method": "post",
+    "function": ["findById","save"],
+    "db": "myLike",
+    "body": {
+        "name": "myLike.getProduct.getName",
+        "price": "myLike.getProduct.getPrice",
+        "picture": "myLike.getProduct.getPicture",
+        "count" : 1
+    }
+},
+{
+    "no": 7,
+    "describe": "찜 삭제",
+    "method": "delete",
+    "function": "deleteById",
+    "db": "myLike",
+    "body": {
+        "myLikeId": ["1","2","3"]
+    }
+},
+{
+    "no": 8,
+    "describe": "장바구니 목록 조회",
+    "method": "get",
+    "function": "findAll",
+    "db": "cart",
+    "body": {
+        "name": "cart.getProduct.getName",
+        "price": "cart.getProduct.getPrice",
+        "picture": "cart.getProduct.getPicture",
+        "count": ""
+    }
+},
+{
+    "no": 8,
+    "describe": "장바구니에서 구매하기 완료",
+    "method": "post",
+    "function": ["findByID","save"],
+    "db": "cart",
+    "body": {
+        "name": "cart.getProduct.getName",
+        "price": "cart.getProduct.getPrice",
+        "picture": "cart.getProduct.getPicture",
+        "count": ""
+    }
+},
+{
+    "no": 8,
+    "describe": "장바구니 목록에서 삭제",
+    "method": "delete",
+    "function": "deleteById",
+    "db": "myLike",
+    "body": {
+        "myLikeId": ["1","2","3"]
+    }
+},
+{
+    "no": 9,
+    "describe": "메인페이지",
+    "method": "get",
+    "function": "findById",
+    "db": "product",
+    "body": {
+        "name": "",
+        "price": "",
+        "picture": ""
+    }
+},
+{
+    "no": 13,
+    "describe": "관리자페이지 상품목록",
+    "method": "get",
+    "function": "findAll",
+    "db": "product",
+    "body": {
+        "name": "",
+        "stock": "",
+        "price": "",
+        "picture": "",
+        "subCategory": "product.getSubCategory.getSubName",
+        "mainCategory": "product.getMainCategory.getMainName"
+    }
+},
+{
+    "no": 14,
+    "describe": "상품 상세페이지 조회",
+    "method": "get",
+    "function": "findById",
+    "db": "product",
+    "body": {
+        "name": "",
+        "stock": "재고 5개 이하로 내려갈시 경고메세지",
+        "price": "",
+        "picture": ""
+    }
+},
+{
+    "no": 14,
+    "describe": "상품 상세페이지에서 장바구니 담기",
+    "method": "post",
+    "function": ["findById", "save"],
+    "db": "product",
+    "body": {
+        "name": "",
+        "price": "",
+        "picture": "",
+        "count": 1
+    }
+},
+{
+    "no": 14,
+    "describe": "상품 상세페이지에서 찜 담기(찜하기)",
+    "method": "post",
+    "function": ["findById", "save"],
+    "db": "product",
+    "body": {
+        "memberId": "loginId",
+
+        "name": "",
+        "price": "",
+        "picture": ""
+    }
+},
+{
+    "no": 14, 
+    "describe": "상품 상세페이지에서 구매하기 완료",
+    "method": "post",
+    "function": ["findById","save"],
+    "db": "product",
+    "body": {
+        "name": "",
+        "price": "",
+        "picture": "",
+        "count" : "product.getOrderProduct.getCount"
+    }
+},
+{
+    "no": 15,
+    "describe": "상품 리스트페이지 조회",
+    "method": "get",
+    "function": ["findAll", "where=category", "pagenation","sort"],
+    "db": "product",
+    "body": {
+        "name": "",
+        "stock": "재고 5개 이하로 내려갈시 경고메세지",
+        "price": "",
+        "picture": ""
+    }
+},
+{
+    "no": 16,
+    "describe": "댓글 조회",
+    "method": "get",
+    "function": "findAll",
+    "db": "comment",
+    "body": {
+        "body": "",
+        "date": "",
+        "memberName": "comment.getMember.getName",
+        "productName": "comment.getProduct.getName"
+    }
+},
+{
+    "no": 16, 
+    "describe": "댓글 생성",
+    "method": "post",
+    "function": "save",
+    "db": "comment",
+    "body": {
+        "body": "",
+        "date": "",
+        "memberName": "comment.getMember.getName",
+        "productName": "comment.getProduct.getName"
+    }
+}]

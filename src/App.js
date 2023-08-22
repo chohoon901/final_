@@ -24,13 +24,25 @@ import Footer from './component/Footer';
 
 import Mainbanner from './component/Mainbanner';
 
+import Pay from './route/Pay';
 
 
 function App() {
 
   
   let navigate = useNavigate()
+  let [user, setUser] = useState(null);
 
+  const config = {
+    headers: {
+      "Authorization": localStorage.getItem("jwtToken"),
+    },
+  };
+
+  const checkAuthenication = async () => {
+    let res = await axios.get("http://localhost:8080/member/test", config);
+    setUser(res.data)
+  }
 
   return (
     <div className="App">
@@ -90,6 +102,9 @@ function App() {
       </header>
 
       <Routes>
+        <Route path="/pay" element={
+          <Pay></Pay>
+        }></Route>
         <Route path="/login" element={
           <Login></Login>
         }></Route>
@@ -123,12 +138,18 @@ function App() {
         </Route>
       </Routes>
 
+
       <div className="Mainbanner">
       <Mainbanner />
       </div>
       
+      <button onClick={checkAuthenication}>
+        인증정보
+      </button>
+      <h4>{user}</h4>
+      
       <div className='temporary'>
-        <Link to={"/detail/" + 0}>
+        <Link to={"/detail/" + 1}>
           {/* TODO : 0자리에 데이터에서 id값 받아오기 */}
           <img style={{ height : '345px' }} src={process.env.PUBLIC_URL + '/img/fan.jpg'}></img>
         </Link>
