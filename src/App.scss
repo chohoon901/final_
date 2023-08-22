@@ -97,7 +97,11 @@ div.col {
 }
 
 
-
+.searchContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
 .searchInput {
   width: 24rem !important;
   font-size: 16px;
@@ -105,6 +109,19 @@ div.col {
   border: 1px solid rgb(95, 0, 128);
   border-radius: 6px;
   padding: 0.8rem;
+}
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  img {
+    width: 40px; // 아이콘 이미지 크기 조절
+    height: 40px;
+    margin-left: 10px; // 이미지와 검색 입력 필드 사이 간격
+  }
 }
 
 

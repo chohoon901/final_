@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import './style/Detail.scss'
 import { useState } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import axios from 'axios';
 
 function Detail() {
 
@@ -15,6 +16,27 @@ function Detail() {
     const handleDecrement = () => {
       setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
     };
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        "Authorization" : localStorage.getItem("jwtToken")
+      }
+    };
+    const Detail = (props) => {
+    const requestComment = async (request) => {
+      console.log(1, request);
+      let response = await axios.post(
+        `http://localhost:8080/create_comment/${props.id}`,
+        JSON.stringify(request),
+        config
+      );
+      if (response.status === 200) {
+        console.log(2, response.headers.Authorization);
+        window.location.reload();
+      }
+    };
+  };
 
     let {id} = useParams()
     id = Number(id)
@@ -66,12 +88,12 @@ function Detail() {
                     <h6 style={{ marginRight: '15px' }}>가격</h6>
                     <h6>19,990\</h6>
                 </div>
-                <button className="btn btn-light no-radius" style={{ marginRight: '10px' }}>장바구니</button> 
+                <button onClick={Detail} className="btn btn-light no-radius" style={{ marginRight: '10px' }}>장바구니</button> 
                 <button className="btn btn-info no-radius">구매하기</button> 
                 
               </div>
               <div className="col-md-1">
-                <img src={process.env.PUBLIC_URL + '/img/like.png'} className="pt-5"></img>
+                <img onClick={Detail} src={process.env.PUBLIC_URL + '/img/like.png'} className="pt-5"></img>
               </div>
             </div>
         </div>
