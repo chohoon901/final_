@@ -1,10 +1,13 @@
 import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect  } from 'react';
 import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route, useNavigate, Link, Routes } from 'react-router-dom';
 import './App.scss';
 import axios from 'axios';
+import { Pagination, Navigation, Autoplay } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 
 
 import Detail from './route/Detail';
@@ -17,11 +20,15 @@ import Order from './route/Order';
 import Info from './route/Info';
 import Login from './route/Login';
 import Signup from './route/Signup';
-import Pay from './route/Pay';
+import Footer from './component/Footer';
+
+import Mainbanner from './component/Mainbanner';
+
 
 
 function App() {
 
+  
   let navigate = useNavigate()
   let [user, setUser] = useState(null);
 
@@ -47,7 +54,12 @@ function App() {
         </Container>
         <Container>
           <Navbar.Brand href="#home">SummerMart</Navbar.Brand>
+          <div className='searchContainer'>
           <input className='searchInput' type="text" placeholder="검색어를 입력해 주세요"></input>
+          <Link to="/special" className="searchIcon">
+            <img src="img/search.png" alt="검색"></img>
+          </Link>  
+          </div>
           <Row>
             <Col>
               <Link to="/mypage/like">
@@ -107,6 +119,9 @@ function App() {
         <Route path="/detail/:id/" element={
           <Detail></Detail>
         }></Route>
+        <Route path="/cart" element={
+          <Cart></Cart>
+        }></Route>
         <Route path="/mypage" element={
           <MyPage></MyPage>
         }>
@@ -120,9 +135,6 @@ function App() {
               <Info></Info>
             }></Route>
         </Route>
-        <Route path="/cart" element={
-          <Cart></Cart>
-        }></Route>
       </Routes>
 
       <button onClick={checkAuthenication}>
@@ -136,9 +148,13 @@ function App() {
           <img style={{ height : '345px' }} src={process.env.PUBLIC_URL + '/img/fan.jpg'}></img>
         </Link>
       </div>
+        <div className="Footer">
+      <Footer />
+      </div>
 
     </div>
   );
 }
+
 
 export default App;
