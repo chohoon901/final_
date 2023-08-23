@@ -13,7 +13,12 @@ function Detail() {
     let [product, setProduct] = useState(data)
 
     let [isOpen, setIsOpen] = useState(false)
-    const [quantity, setQuantity] = useState(1);
+    // let [quantity, setQuantity] = useState({
+    //   "count" : 1
+    // });
+    let [quantity, setQuantity] = useState(1);
+
+    // setQuantity(quantity => ({ ...quantity, "count" : `${event.target.value}` }));
 
     const handleIncrement = () => {
       setQuantity((prevQuantity) => prevQuantity + 1);
@@ -29,23 +34,38 @@ function Detail() {
         "Authorization" : localStorage.getItem("jwtToken")
       }
     };
-    const Detail = (props) => {
-    const requestComment = async (request) => {
-      console.log(1, request);
-      let response = await axios.post(
-        `http://localhost:8080/create_comment/${props.id}`,
-        JSON.stringify(request),
-        config
-      );
-      if (response.status === 200) {
-        console.log(2, response.headers.Authorization);
-        window.location.reload();
-      }
-    };
-  };
 
     let {id} = useParams()
     id = Number(id)
+
+    let [isLike, setIsLike] = useState(false)
+
+    const addLike = async () => {
+      let response = ""
+      if (isLike == false) {
+        response = await axios.post(
+          `http://localhost:8080/create_mylike/${id}`,
+          {
+  
+          },
+          config
+        );
+      } else {
+        response = await axios.delete(
+          `http://localhost:8080/delete_mylikeIn/${id}`,
+          {
+  
+          },
+          config
+        );
+      }
+      if (response.status === 200) {
+        console.log(2, response.headers.Authorization);
+        setIsLike(!isLike)
+      }
+    };
+
+
 
     const getProduct = async () => {
       let response = await axios.get(
@@ -57,9 +77,19 @@ function Detail() {
       }
     }
 
-    // useEffect(() => {
-    //   getProduct()
-    // }, [])
+    const postCart = async () => {
+      console.log(5, quantity)
+      let response = await axios.post(
+        `http://localhost:8080/create_cart/${id}`,
+        {
+          "count" : `${quantity}`
+        },
+        config
+      );
+      if (response.status === 200) {
+        console.log(2, response.data[0]);
+      }
+    }
 
     return (
       <div className="flex-container">
@@ -104,6 +134,7 @@ function Detail() {
                         value={quantity}
                         min='0'
                         onChange={(e) => setQuantity(Number(e.target.value))}
+                        // setQuantity(quantity => ({ ...quantity, "count" : `${e.target.value}` }));
                       />
                     </div>
                 </div>
@@ -112,14 +143,20 @@ function Detail() {
                     <h6 style={{ marginRight: '15px' }}>가격</h6>
                     <h6>19,990\</h6>
                 </div>
-                <button className="btn btn-light no-radius" style={{ marginRight: '10px' }}>장바구니</button> 
+                <button onClick={postCart} className="btn btn-light no-radius" style={{ marginRight: '10px' }}>장바구니</button> 
                 <button className="btn btn-info no-radius" onClick={() => {
                   window.location.href="/pay"
                 }}>구매하기</button> 
                 
               </div>
               <div className="col-md-1">
-                <img onClick={Detail} src={process.env.PUBLIC_URL + '/img/like.png'} className="pt-5"></img>
+              <button onClick={addLike} className="pt-5" style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
+                {
+                  isLike ?
+                  <img src={process.env.PUBLIC_URL + '/img/colorheart.png'} alt="Like" /> : // 찜했을때
+                  <img src={process.env.PUBLIC_URL + '/img/like.png'} alt="Like" />   // 찜 안했을때(기본값)
+                }
+              </button>
               </div>
             </div>
             <div></div>

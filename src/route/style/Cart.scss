@@ -28,3 +28,17 @@
     justify-content: space-evenly;
     border: 1px solid rgb(208, 208, 208);
 }
+.cart_body {
+    display: flex;
+    margin: 2rem;
+    justify-content: center;
+    border-bottom: 1px solid gray;
+    height: 100px;
+    width: 70%;
+}
+.cart_real {
+    width: 70%;
+    padding-left: 25px;
+    padding-top: 10px;
+    text-align: left;
+}

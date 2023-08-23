@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './style/Mainbanner.scss';
 
+
 const images = [
-  'img/main1.jpg',
-  'img/main2.jpg',
-  'img/main3.jpg',
+  `${process.env.PUBLIC_URL}/img/main1.jpg`,
+  `${process.env.PUBLIC_URL}/img/main2.jpg`,
+  `${process.env.PUBLIC_URL}/img/main3.jpg`,
   // 추가 이미지 경로들...
 ];
 
