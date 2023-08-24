@@ -2,96 +2,51 @@ import React, { useEffect, useState } from 'react'
 import './style/Category.scss'
 import { Link } from 'react-router-dom'
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md"
+import categorydata from './Categorydata';
 
 function Category({ page, title, setLikeswitch }) {  
 
     return (
         <div className='categoryNav'>
             <h5>카테고리</h5>
-            <CategoryBody></CategoryBody>
-            
-                    
+            <CategoryBody />     
         </div>
-    )
+    );
 }
 
 function CategoryBody() {
 
-    let [isopen, setIsopen] = useState(false)
+    let [isOpen, setIsOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setIsOpen(!isOpen);
+      };
 
     return (
-        <div className='categoryBody'>
-          <div className='container'>
-              <Link to="List">
-                  <span>스킨케어</span>
-              </Link>
-              <div onClick={() => {setIsopen(!isopen)}}>
-                  {
-                      // 대분류 화살표를 누르면 소분류가 튀어나온다.
-                      // 다시 누르면 원래대로 돌아간다.
-                      // 모든 분류들은 누르면 각각의 물건 리스트가 뜬다. 
-                      isopen == true
-                      ? <MdOutlineKeyboardArrowUp></MdOutlineKeyboardArrowUp>
-                      : <MdOutlineKeyboardArrowDown></MdOutlineKeyboardArrowDown>
-                  }
-              </div>
-          </div>
-          <Dropdown visibility={isopen}>
+      <div className='categoryBody'>
+      {categorydata.map((category) => (
+        <React.Fragment key={category.id}>
+            <Link to={`/${category.name}`}>
+              <span>{category.name}</span>
+            </Link>
+            <div onClick={toggleDropdown}>
+              {isOpen ? (
+                <MdOutlineKeyboardArrowUp />
+              ) : (
+                <MdOutlineKeyboardArrowDown />
+              )}
+            </div>
+          {isOpen && (
             <ul>
-                <li>item 1</li>
-                <li>item 2</li>
-                <li>item 3</li>
-                <li>item 4</li>
+              {category.items.map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
             </ul>
-          </Dropdown>
-          <div className='container'>
-              <Link to="List">
-                  <span>스킨케어</span>
-              </Link>
-              <div onClick={() => {setIsopen(!isopen)}}>
-                  {
-                      // 대분류 화살표를 누르면 소분류가 튀어나온다.
-                      // 다시 누르면 원래대로 돌아간다.
-                      // 모든 분류들은 누르면 각각의 물건 리스트가 뜬다. 
-                      isopen == true
-                      ? <MdOutlineKeyboardArrowUp></MdOutlineKeyboardArrowUp>
-                      : <MdOutlineKeyboardArrowDown></MdOutlineKeyboardArrowDown>
-                  }
-              </div>
-          </div>
-          <Dropdown visibility={isopen}>
-            <ul>
-                <li>item 1</li>
-                <li>item 2</li>
-                <li>item 3</li>
-                <li>item 4</li>
-            </ul>
-          </Dropdown>
-          <div className='container'>
-              <Link to="List">
-                  <span>스킨케어</span>
-              </Link>
-              <div onClick={() => {setIsopen(!isopen)}}>
-                  {
-                      // 대분류 화살표를 누르면 소분류가 튀어나온다.
-                      // 다시 누르면 원래대로 돌아간다.
-                      // 모든 분류들은 누르면 각각의 물건 리스트가 뜬다. 
-                      isopen == true
-                      ? <MdOutlineKeyboardArrowUp></MdOutlineKeyboardArrowUp>
-                      : <MdOutlineKeyboardArrowDown></MdOutlineKeyboardArrowDown>
-                  }
-              </div>
-          </div>
-          <Dropdown visibility={isopen}>
-            <ul>
-                <li>item 1</li>
-                <li>item 2</li>
-                <li>item 3</li>
-                <li>item 4</li>
-            </ul>
-          </Dropdown>
-        </div>
-    )
+          )}
+        </React.Fragment>
+      ))}
+    </div>
+  );
 }
 
 function Dropdown(props) {
