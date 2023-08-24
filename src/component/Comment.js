@@ -23,7 +23,7 @@ function Comment(props) {
       }
     };
 
-    const requestComment = async (request) => {
+    const requestComment = async (request, callback) => {
         console.log(1, request);
         let response = await axios.post(
           `http://localhost:8080/create_comment/${props.id}`,
@@ -32,8 +32,10 @@ function Comment(props) {
         );
         if (response.status === 200) {
           console.log(2, response.headers.Authorization);
-          
-          window.location.reload();
+
+          if (callback) {
+            callback();
+          }
         }
       }
 
@@ -54,11 +56,10 @@ function Comment(props) {
           setComments(extractedBodies);
         }
       }
-
-      const handleButtonClick = (comment) => {
-        requestComment(comment);
+      
+      useEffect(() => {
         getComments();
-      };
+      }, []); 
 
   return (
     <div className='comment'>
@@ -68,10 +69,11 @@ function Comment(props) {
           placeholder='댓글을 작성해주세요' 
           style={{ width: '70%', textAlign: 'left', padding: '10px' }}
           onChange={saveComment}></input>
-          <button onClick={() => handleButtonClick(comment)}>작성</button>
+          <button onClick={() => requestComment(comment, getComments)}>작성</button>
       </div>
       <div className='comment_header'>
-        <CommentBody id={props.id}></CommentBody>
+        {/* <button onClick={getComments}>조회</button> */}
+        <CommentBody id={props.id} comments={comments}></CommentBody>
       </div>
     </div>
   )
@@ -79,54 +81,19 @@ function Comment(props) {
 
 function CommentBody(props) {
 
-  const config = {
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Authorization": localStorage.getItem("jwtToken")
-    }
-  }
-
-  let [comments, setComments] = useState([]);
-
-  const getComments = async () => {
-    let response = await axios.get(
-      `http://localhost:8080/select_comment/${props.id}`,
-    //   "http://localhost:8080/login", 
-      config
-    );
-    if (response.status === 200) {
-      console.log(2, response.data[0]);
-      const extractedBodies = response.data.map(item => item.body);
-      setComments(extractedBodies);
-      // comments = response.data.body
-      // window.location.reload();
-    }
-  }
   return (
       <div className='container_comment'>
         {
-          comments.map((body, index) => (
+          props.comments.map((body, index) => (
             <div className='comment_body'>
-              <h3 style={{ alignItems: "center" }}>{index}</h3>
+              <h3 style={{ alignItems: "center" }}>{index + 1}</h3>
               <div id={index} className='comment_real'>{body}</div>
             </div> 
           ))
         }
-        <button onClick={getComments}>버튼</button>
+        {/* <button onClick={getComments}>버튼</button> */}
       </div>
-    
   )
-
-  // props.comments.map((a, i) => {
-  //   return (
-  //     <div className='comment_body'>
-  //       <h3 style={{ alignItems: "center" }}>1</h3>
-  //       <div className='comment_real'>댓글</div>
-  //       <button onClick={()=>getComments}>버튼</button>
-  //     </div>
-  //   )
-  // })
-  
 }
 
 export default Comment

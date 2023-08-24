@@ -9,15 +9,16 @@ function Pay() {
 
   const config = {
     headers: {
-      // "Content-Type": "application/json; charset=utf-8",
+      "Content-Type": "application/json; charset=utf-8",
       "Authorization" : localStorage.getItem("jwtToken")
     }
   };
-
-  const pay = async (product) => {
+  
+  const pay = async (request) => {
+    console.log(...request)
     let kakaoToken = await Axios.post(
       "http://localhost:8080/payment/ready",
-      JSON.stringify(product[0]),
+      ...request,
       config
     );
     
@@ -32,7 +33,7 @@ function Pay() {
   return (
   <div>
     <Product product={product}></Product>
-    <button onClick={pay}>KakaoPay 결제</button>
+    <button onClick={() => {pay(product)}}>KakaoPay 결제</button>
   </div>
   )
 }
@@ -42,7 +43,7 @@ function Product(props) {
   return (
     <div className='product'>
         <img src={process.env.PUBLIC_URL + '/img/fan.jpg'}></img>
-        <h3>{props.product[0].name}</h3>
+        <h3>{props.product[0].item_name}</h3>
     </div>
   )
 }

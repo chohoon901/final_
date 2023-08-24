@@ -40,7 +40,7 @@ export default function Login () {
     if (jwtToken.status === 200) {
       console.log(2, jwtToken.headers.authorization);
       localStorage.setItem("jwtToken", jwtToken.headers.authorization);
-      window.location.replace("http://localhost:3000/")
+      window.location.replace("http://localhost:3000/main")
     }
   }
   
@@ -54,6 +54,7 @@ export default function Login () {
     if (jwtToken.status === 200) {
       console.log(2, jwtToken.data);
       localStorage.setItem("jwtToken", jwtToken.data);
+      window.location.replace("http://localhost:3000/main")
     }
   };
 

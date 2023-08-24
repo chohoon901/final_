@@ -23,19 +23,20 @@ function Detail() {
       setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
     };
 
-    const config = {
+    const header = {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         "Authorization" : localStorage.getItem("jwtToken")
       }
-    };
+    }
+
     const Detail = (props) => {
     const requestComment = async (request) => {
       console.log(1, request);
       let response = await axios.post(
         `http://localhost:8080/create_comment/${props.id}`,
         JSON.stringify(request),
-        config
+        header
       );
       if (response.status === 200) {
         console.log(2, response.headers.Authorization);
@@ -57,7 +58,7 @@ function Detail() {
     const getProduct = async () => {
       let response = await axios.get(
         `http://localhost:8080/show_product/${id}`,
-        config
+        header
       );
       if (response.status === 200) {
         console.log(2, response.data[0]);

@@ -5,10 +5,6 @@ import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route, useNavigate, Link, Routes } from 'react-router-dom';
 import './App.scss';
 import axios from 'axios';
-import { Pagination, Navigation, Autoplay } from 'swiper';
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-
 
 import Detail from './route/Detail';
 import MyPage from './component/MyPage';
@@ -21,6 +17,7 @@ import Info from './route/Info';
 import Login from './route/Login';
 import Signup from './route/Signup';
 import Footer from './component/Footer';
+import Pay from './route/Pay';
 
 import Mainbanner from './component/Mainbanner';
 
@@ -57,7 +54,7 @@ function App() {
           <div className='searchContainer'>
           <input className='searchInput' type="text" placeholder="검색어를 입력해 주세요"></input>
           <Link to="/special" className="searchIcon">
-            <img src="img/search.png" alt="검색"></img>
+            <img src={process.env.PUBLIC_URL + '/img/search.png'} alt="검색"></img>
           </Link>  
           </div>
           <Row>
@@ -81,7 +78,7 @@ function App() {
         <Container>
           <Nav className="me-auto">
             <Nav.Link onClick={() => {
-              navigate('/')
+              navigate('/main')
             }} className='bar mya' >홈</Nav.Link>
             <Nav.Link onClick={() => {
               navigate('/best')
@@ -101,6 +98,9 @@ function App() {
       </header>
 
       <Routes>
+        <Route path="/main" element={
+          <Mainbanner></Mainbanner>
+        }></Route>
         <Route path="/pay" element={
           <Pay></Pay>
         }></Route>
