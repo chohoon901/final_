@@ -10,6 +10,7 @@ function Comment(props) {
       "body" : ""
     });
 
+    
 
     const saveComment = (event) => {
       setComment(comment => ({ ...comment, "body" : `${event.target.value}` }));
@@ -57,6 +58,26 @@ function Comment(props) {
         }
       }
 
+      const deleteComment = async () => {
+        let response = await axios.delete(
+          `http://localhost:8080//`,
+          config
+        );
+        if (response.status === 200) {
+          console.log(2, response.data[0]);
+        }
+    }
+
+      const patchComment = async () => {
+        let response = await axios.patch(
+          `http://localhost:8080//`,
+          config
+        );
+        if (response.status === 200) {
+          console.log(2, response.data[0]);
+        }
+    }
+
       useEffect(() => {
         getComments();
       }, []);
@@ -70,6 +91,8 @@ function Comment(props) {
           style={{ width: '70%', textAlign: 'left', padding: '10px' }}
           onChange={saveComment}></input>
           <button onClick={() => requestComment(comment, getComments)}>작성</button>
+          <button onClick={deleteComment}>삭제</button>
+          <button onClick={patchComment}>수정</button>
       </div>
       <div className='comment_header'>
         {/* <button onClick={getComments}>조회</button> */}

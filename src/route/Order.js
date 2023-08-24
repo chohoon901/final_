@@ -24,7 +24,7 @@ function order() {
             <ul>
               {dummyOrders.map(order => (
                 <li key={order.id}>
-                  <div>ID: {order.id}</div>
+                  <div>id: {order.id}</div>
                   <div>날짜: {order.date}</div>
                   <div>제품 목록:</div>
                   <ul>

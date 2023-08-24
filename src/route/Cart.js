@@ -2,6 +2,7 @@ import './style/Cart.scss'
 import { LiaPlusSolid, LiaEqualsSolid } from "react-icons/lia"
 import axios from "axios";
 import React, { useEffect, useState } from 'react'
+import { useParams } from "react-router";
 
 function Cart() {
 
@@ -12,7 +13,9 @@ function Cart() {
         }
       };
 
-    let [comments, setComments] = useState([]);
+    let {id} = useParams()
+    id = Number(id)
+
 
     let [cart, setCart] = useState([]);
 
@@ -24,9 +27,18 @@ function Cart() {
         if (response.status === 200) {
           console.log(2, response.data);
           setCart(response.data);
-
         }
       }
+
+    const deleteCart = async () => {
+      let response = await axios.delete(
+        `http://localhost:8080/delete_cart/${id}`,
+        config
+      );
+      if (response.status === 200) {
+        console.log(2, response.data[0]);
+      }
+  }
     
     return (
         <div>
@@ -34,6 +46,7 @@ function Cart() {
             <div>
         </div>
         <button onClick={getCart}>버튼</button>
+        <button onClick={deleteCart}>삭제 버튼</button>
         </div>
     )
 }

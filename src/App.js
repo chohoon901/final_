@@ -85,14 +85,8 @@ function App() {
               navigate('/main')
             }} className='bar mya' >홈</Nav.Link>
             <Nav.Link onClick={() => {
-              navigate('/best')
-            }} className='bar mya'>베스트</Nav.Link>
-            <Nav.Link onClick={() => {
               navigate('/special')
             }} className='bar mya'>특가</Nav.Link>
-            <Nav.Link onClick={() => {
-              navigate('/event')
-            }} className='bar mya'>여름이벤트</Nav.Link>
           </Nav>
           <div className='rank'>
             1. 펩시제로
@@ -116,9 +110,6 @@ function App() {
         }></Route>
         <Route path="/signup" element={
           <Signup></Signup>
-        }></Route>
-        <Route path="/best" element={
-          <Best></Best>
         }></Route>
         <Route path="/special" element={
           <Special></Special>
