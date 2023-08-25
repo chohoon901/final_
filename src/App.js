@@ -21,6 +21,7 @@ import Info from './route/Info';
 import Login from './route/Login';
 import Signup from './route/Signup';
 import Footer from './component/Footer';
+import Payment from './route/payment';
 
 import Mainbanner from './component/Mainbanner';
 
@@ -102,8 +103,8 @@ function App() {
         <Route path="/pay" element={
           <Pay></Pay>
         }></Route>
-        <Route path="/pay" element={
-          <Pay></Pay>
+        <Route path="/payment" element={
+          <Payment></Payment>
         }></Route>
         <Route path="/login" element={
           <Login></Login>
@@ -123,6 +124,7 @@ function App() {
         <Route path="/mypage" element={
           <MyPage></MyPage>
         }>
+          <Route index element={<Order />} />
             <Route path="order" element={
               <Order></Order>
             }></Route>

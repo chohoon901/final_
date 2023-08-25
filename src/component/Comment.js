@@ -49,10 +49,10 @@ function Comment(props) {
           config
         );
         if (response.status === 200) {
-          console.log(2, response.data[0].body);
+          // console.log(2, response.data[0].body);
           // comments = response.data.body;
           // window.location.reload();
-          console.log(2, response.data[0]);
+          // console.log(2, response.data[0]);
           const extractedBodies = response.data.map(item => item.body);
           setComments(extractedBodies);
         }
@@ -60,7 +60,7 @@ function Comment(props) {
 
       const deleteComment = async () => {
         let response = await axios.delete(
-          `http://localhost:8080//`,
+          `http://localhost:8080/delete_comment/`,
           config
         );
         if (response.status === 200) {
@@ -70,7 +70,7 @@ function Comment(props) {
 
       const patchComment = async () => {
         let response = await axios.patch(
-          `http://localhost:8080//`,
+          `http://localhost:8080//update_comment/`,
           config
         );
         if (response.status === 200) {

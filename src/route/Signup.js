@@ -1,8 +1,28 @@
 import React, { useState } from 'react';
 import '../route/style/Signup.scss';
 import Button from '../component/Button';
+import axios from "axios";
 
 export default function Signup() {
+
+  const config = {
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization" : localStorage.getItem("jwtToken")
+    }
+  };
+
+
+  const postJoin = async () => {
+    let response = await axios.post(
+      `http://localhost:8080/join/`,
+      config
+    );
+    if (response.status === 200) {
+      console.log(2, response.data[0]);
+    }
+  }
+
   return (
     <div className='signup'>
       <div className='header'>
@@ -54,7 +74,7 @@ export default function Signup() {
           />
         </div>
         <section className='btn'>
-          <Button name="가입하기" form="signup" type="submit" isPurple={true} width="100%" />
+          <Button onClick={postJoin} name="가입하기" form="signup" type="submit" isPurple={true} width="100%" />
         </section>
       </form>
     </div>
