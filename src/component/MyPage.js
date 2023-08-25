@@ -19,8 +19,6 @@ function MyPage() {
                         <ul>
                             <NavbarItem page={'/mypage/order'} title={'주문내역'} 
                             setLikeswitch={setLikeswitch}/>
-                            <NavbarItem page={'/mypage/coupon'} title={'내 쿠폰'}
-                            setLikeswitch={setLikeswitch}/>
                             <NavbarItem page={'/mypage/like'} title={'찜한상품'} 
                             setLikeswitch={setLikeswitch}/>
                             <NavbarItem page={'/mypage/info'} title={'정보수정'}

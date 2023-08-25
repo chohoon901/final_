@@ -36,7 +36,11 @@ function Like() {
           `http://localhost:8080/delete_mylike/${id}`,
           config
         );
+        if (response.status === 200) {
+          console.log(2, response.data[0]);
+        }
     }
+    <LikeProduct like={like} deleteLike={deleteLike} />
     
     return (
         <div className='myLike'>
@@ -87,7 +91,7 @@ function LikeProduct(props) {
               <div id={index} className='like_real'>{ body.price * (1 - body.disc) }</div>
               <div id={index} className='like_real'>{body.picture}</div>
               <button>장바구니</button>
-              <button>삭제</button>
+              <button onClick={() => props.deleteLike(body.id)}>삭제</button>
             </div>
           ))
         }
