@@ -57,7 +57,7 @@ function Comment(props) {
 
       const deleteComment = async () => {
         let response = await axios.delete(
-          `http://localhost:8080//`,
+          `http://localhost:8080/delete_comment/`,
           config
         );
         if (response.status === 200) {
@@ -67,7 +67,7 @@ function Comment(props) {
 
       const patchComment = async () => {
         let response = await axios.patch(
-          `http://localhost:8080//`,
+          `http://localhost:8080//update_comment/`,
           config
         );
         if (response.status === 200) {

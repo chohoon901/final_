@@ -38,6 +38,17 @@ function InfoForm() {
       });
   };
 
+  
+  const patchInfo = async () => {
+    let response = await axios.patch(
+      `http://localhost:8080//update_member/`,
+      config
+    );
+    if (response.status === 200) {
+      console.log(2, response.data[0]);
+    }
+}
+
   return (
     <div>
       <h2>정보 수정</h2>
@@ -57,7 +68,7 @@ function InfoForm() {
           <label>휴대폰 번호:</label>
           <input type="text" name="phoneNumber" value={user.phoneNumber} onChange={handleChange} />
         </div>
-        <button type="submit">저장</button>
+        <button onClick={patchInfo} type="submit">저장</button>
       </form>
     </div>
   );

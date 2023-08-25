@@ -127,6 +127,7 @@ function App() {
         <Route path="/mypage" element={
           <MyPage></MyPage>
         }>
+          <Route index element={<Order />} />
             <Route path="order" element={
               <Order></Order>
             }></Route>
