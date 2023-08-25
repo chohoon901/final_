@@ -49,11 +49,7 @@ function Comment(props) {
           config
         );
         if (response.status === 200) {
-          console.log(2, response.data[0].body);
-          
-          // comments = response.data.body;
-          // window.location.reload();
-          console.log(2, response.data[0]);
+          console.log(2, response.data);
           const extractedBodies = response.data.map(item => item.body);
           setComments(extractedBodies);
         }

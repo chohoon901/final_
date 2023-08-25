@@ -31,7 +31,10 @@ function List(props) {
 function TabContent({tab}) {
     return (
         <div className='content'>
-            { [<div>내용1</div>, <div>내용2</div>][tab] }
+            { [<div>
+                <img src='http://thumbnail9.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/1416/0e5267cc91b6fcad091f241145c0292a3c7e84dd4d624364bf137bff58bc.jpg'></img>
+              </div>,
+               <div>내용2</div>][tab] }
         </div>
     )
 }

@@ -5,6 +5,8 @@ import { Nav, Navbar, Container, Row, Col } from 'react-bootstrap';
 import { BrowserRouter as Router, Switch, Route, useNavigate, Link, Routes } from 'react-router-dom';
 import './App.scss';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
+import base64 from 'base-64';
 
 import Detail from './route/Detail';
 import MyPage from './component/MyPage';
@@ -18,10 +20,9 @@ import Login from './route/Login';
 import Signup from './route/Signup';
 import Footer from './component/Footer';
 import Pay from './route/Pay';
+import PayResult from './route/PayResult';
 
 import Mainbanner from './component/Mainbanner';
-
-
 
 function App() {
 
@@ -38,6 +39,13 @@ function App() {
   const checkAuthenication = async () => {
     let res = await axios.get("http://localhost:8080/member/test", config);
     setUser(res.data)
+  }
+
+  const checkToken = () => {
+    let token = window.localStorage.getItem("jwtToken")
+    let payload = token.substring(token.indexOf('.')+1,token.lastIndexOf('.')); 
+    let dec = base64.decode(payload);
+    console.log(dec)
   }
 
   return (
@@ -98,6 +106,9 @@ function App() {
         <Route path="/pay" element={
           <Pay></Pay>
         }></Route>
+        <Route path="/payresult" element={
+          <PayResult></PayResult>
+        }></Route>
         <Route path="/login" element={
           <Login></Login>
         }></Route>
@@ -128,7 +139,7 @@ function App() {
         </Route>
       </Routes>
 
-      <button onClick={checkAuthenication}>
+      <button onClick={checkToken}>
         인증정보
       </button>
       <h4>{user}</h4>
@@ -136,7 +147,8 @@ function App() {
       <div className='temporary'>
         <Link to={"/detail/" + 1}>
           {/* TODO : 0자리에 데이터에서 id값 받아오기 */}
-          <img style={{ height : '345px' }} src={process.env.PUBLIC_URL + '/img/fan.jpg'}></img>
+          {/* <img style={{ height : '345px' }} src={process.env.PUBLIC_URL + '/img/fan.jpg'}></img> */}
+          <img style={{ height : '345px' }} src="http://thumbnail8.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/2b3a/e1f41dc2a98e8257365f7dec7c9028aa64e5f6d7af34528cb7e5d5a6805e.jpg"></img>
         </Link>
       </div>
         <div className="Footer">
