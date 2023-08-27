@@ -42,12 +42,12 @@ function Special() {
   // }, [keyword])
 
   return (
-    <div className='container'>
-      {/* <button onClick={() => {console.log(input)}}>버튼</button> */}
-        <div className='best'>
+    <div className='specialcontainer'>
             <Category></Category>
+        <div className='best'>
             <List title='특가'></List>
         </div>
+        
         <div className='ProductList'>
           <h1></h1>
           <ul>

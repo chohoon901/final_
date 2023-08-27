@@ -16,6 +16,14 @@ function Cart() {
   //   setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
   // };
 
+  // const handleIncrement = () => {
+  //   setQuantity((prevQuantity) => prevQuantity + 1);
+  // };
+
+  // const handleDecrement = () => {
+  //   setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+  // };
+
     const config = {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -40,8 +48,24 @@ function Cart() {
     //   }
     // }
 
+    // const updateCart = async () => {
+    //   console.log(5, quantity)
+    //   let response = await axios.patch(
+    //     `http://localhost:8080/update_cart/`,
+    //     {
+    //       "count" : `${quantity}`
+    //     },
+    //     config
+    //   );
+    //   if (response.status === 200) {
+    //     console.log(2, response.data[0]);
+    //   }
+    // }
+
 
     let [cart, setCart] = useState([]);
+
+    let dispatch = useDispatch();
 
     let dispatch = useDispatch();
 
@@ -52,6 +76,10 @@ function Cart() {
         );
         if (response.status === 200) {
           console.log(2, response.data);
+          dispatch(setCount(response.data))
+          setCart(response.data, () => {
+            console.log(cart)
+          });
           dispatch(setCount(response.data))
           setCart(response.data, () => {
             console.log(cart)
@@ -191,6 +219,7 @@ function CartBody(props) {
             </div>
             <div>
                 {
+                  stock.map((body, index) => (
                   stock.map((body, index) => (
                     <div className='cart_body'>
                       <div style={{ display: 'none' }}>{body.id}</div>

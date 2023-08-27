@@ -150,6 +150,7 @@ function App() {
           <MyPage></MyPage>
         }>
           <Route index element={<Order />} />
+          <Route index element={<Order />} />
             <Route path="order" element={
               <Order></Order>
             }></Route>

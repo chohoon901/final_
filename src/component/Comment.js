@@ -3,6 +3,8 @@ import './style/Comment.scss'
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
+
+
 function Comment(props) {
 
     // let server = useSelector((state) => {
@@ -67,7 +69,7 @@ function Comment(props) {
 
       const patchComment = async () => {
         let response = await axios.patch(
-          `http://localhost:8080//update_comment/`,
+          `http://localhost:8080/update_comment/`,
           config
         );
         if (response.status === 200) {
