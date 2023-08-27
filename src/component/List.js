@@ -1,10 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './style/List.scss'
 import { Nav, Pagination } from 'react-bootstrap'
+import axios from "axios";
 
 function List(props) {
 
     let [tab, setTab] = useState(0)
+
+    const [mainData, setMainData] = useState([]);
+    const [subData, setSubData] = useState([]);
+
+    useEffect(() => {
+        bestMain();
+        bestSub();
+    }, []);
 
     return (
       <div className='row'>
@@ -13,12 +22,12 @@ function List(props) {
         </div>
         <Nav variant="underline" defaultActiveKey="link0">
           <Nav.Item>
-            <Nav.Link eventKey="link0" onClick={() => { setTab(0) }}>
+            <Nav.Link eventKey="link0" onClick={(mainsub) => { setTab(0) }}>
               높은 가격순
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link1" onClick={() => { setTab(1) }}>
+            <Nav.Link eventKey="link1" onClick={(mainsub) => { setTab(1) }}>
               낮은 가격순
             </Nav.Link>
           </Nav.Item>
@@ -28,12 +37,45 @@ function List(props) {
     )
 }
 
+
+
 function TabContent({tab}) {
+
+
+
+  const [activePage, setActivePage] = useState(1); // 활성화된 페이지 상태
+
+  // 페이지 번호 클릭 시 활성화 페이지를 변경하는 함수
+  const handlePageClick = (pageNumber) => {
+    setActivePage(pageNumber);
+  };
+
+  let items = [];
+  for (let number = 1; number <= 8; number++) {
+    items.push(
+      <Pagination.Item
+        key={number}
+        active={number === activePage}
+        onClick={() => handlePageClick(number)} // 페이지 클릭 이벤트 처리
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
+
+  const paginationBasic = (
+    <div className="pagination">
+      <Pagination>{items}</Pagination>
+      <br />
+    </div>
+  );
+
     return (
       <div>
         <ProductList />
         <hr className="gray-line" />
         <ProductList />
+      <div>{paginationBasic}</div>
       </div>
       
   );
@@ -78,6 +120,38 @@ function ProductList() {
     </div>
   </div>
   );
+}
+
+function mainsub() {
+  const config = {
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization" : localStorage.getItem("jwtToken")
+    }
+  };
+  
+
+    const bestMain = async () => {
+        let response = await axios.post(
+          `http://localhost:8080/best_mainCategory/`,
+          
+          config
+        );
+        if (response.status === 200) {
+          bestMain(response.data);
+        }
+      }
+      
+    const bestSub = async () => {
+        let response = await axios.post(
+          `http://localhost:8080/best_subCategory/`,
+          
+          config
+        );
+        if (response.status === 200) {
+          bestSub(response.data);
+        }
+      }
 }
 
 export default List

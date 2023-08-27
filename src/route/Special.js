@@ -23,12 +23,15 @@ function Special() {
   const getAllProduct = async () => {
     let response = await axios.get(
       `http://localhost:8080/get_products/`,
+
       config
     );
     if (response.status === 200) {
       setProducts(response.data);
     }
   }
+
+
 
   return (
     <div className='specialcontainer'>

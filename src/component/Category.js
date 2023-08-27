@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './style/Category.scss'
+import axios from "axios";
 import { Link } from 'react-router-dom'
 import { MdOutlineKeyboardArrowDown, MdOutlineKeyboardArrowUp } from "react-icons/md"
 
@@ -19,6 +20,42 @@ function Category({ page, title, setLikeswitch }) {
 }
 
 function CategoryBody() {
+
+const config = {
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization" : localStorage.getItem("jwtToken")
+    }
+  };
+  
+
+    const bestMain = async () => {
+        let response = await axios.post(
+          `http://localhost:8080/best_mainCategory/`,
+          
+          config
+        );
+        if (response.status === 200) {
+            JSON.pageNumber(response.data);
+            JSON.categoryName(response.data);
+            JSON.sortBy(response.data);
+            JSON.sortDirection(response.data);
+        }
+      }
+      
+    const bestSub = async () => {
+        let response = await axios.post(
+          `http://localhost:8080/best_subCategory/`,
+          
+          config
+        );
+        if (response.status === 200) {
+            JSON.pageNumber(response.data);
+            JSON.categoryName(response.data);
+            JSON.sortBy(response.data);
+            JSON.sortDirection(response.data);
+        }
+      }
 
     let [isopen, setIsopen] = useState(false)
 
@@ -55,7 +92,7 @@ function CategoryBody() {
             title={category.title}
           >
             {category.items.map((item, index) => (
-              <Dropdown.Item key={index} eventKey={String(index)}>
+              <Dropdown.Item onClick={bestSub} key={index} eventKey={String(index)}>
                 {item}
               </Dropdown.Item>
             ))}

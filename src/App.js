@@ -21,7 +21,7 @@ import Info from './route/Info';
 import Login from './route/Login';
 import Signup from './route/Signup';
 import Footer from './component/Footer';
-import Payment from './route/payment';
+import PayResult from './route/PayResult';
 
 import Mainbanner from './component/Mainbanner';
 
@@ -103,8 +103,8 @@ function App() {
         <Route path="/pay" element={
           <Pay></Pay>
         }></Route>
-        <Route path="/payment" element={
-          <Payment></Payment>
+        <Route path="/PayResult" element={
+          <PayResult></PayResult>
         }></Route>
         <Route path="/login" element={
           <Login></Login>
