@@ -45,7 +45,7 @@ function Comment(props) {
 
       const getComments = async () => {
         let response = await axios.get(
-          `http://localhost:8080/select_comment/${props.id}`,
+          `http://localhost:8080/show_comments/${props.id}`,
           config
         );
         if (response.status === 200) {
@@ -85,11 +85,11 @@ function Comment(props) {
           <h2>댓글작성</h2>
           <input 
           placeholder='댓글을 작성해주세요' 
-          style={{ width: '70%', textAlign: 'left', padding: '10px' }}
+          style={{ width: '55%', textAlign: 'left', padding: '10px', marginRight: '10px' }}
           onChange={saveComment}></input>
-          <button onClick={() => requestComment(comment, getComments)}>작성</button>
-          <button onClick={deleteComment}>삭제</button>
-          <button onClick={patchComment}>수정</button>
+          <button className='buttonDetail' onClick={() => requestComment(comment, getComments)}>작성</button>
+          <button className='buttonDetail' onClick={deleteComment}>삭제</button>
+          <button className='buttonDetail' onClick={patchComment}>수정</button>
       </div>
       <div className='comment_header'>
         {/* <button onClick={getComments}>조회</button> */}

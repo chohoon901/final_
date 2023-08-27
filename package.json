@@ -25,7 +25,6 @@
     "sass": "^1.66.1",
     "web-vitals": "^2.1.4"
   },
-  "proxy": "https://kapi.kakao.com",
   "scripts": {
     "start": "react-scripts start --public-url /main",
     "build": "react-scripts build",

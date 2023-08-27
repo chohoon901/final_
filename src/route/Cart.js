@@ -4,7 +4,7 @@ import axios from "axios";
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from 'react-redux';
-import { addCount, minusCount, setCount } from '../store';
+import { addCount, addValue, setCount } from '../store';
 
 function Cart() {
 
@@ -59,49 +59,130 @@ function Cart() {
         }
       }
 
-    const deleteCart = async () => {
-      let response = await axios.delete(
-        `http://localhost:8080/delete_cart/`,
-        config
-      );
-      if (response.status === 200) {
-        console.log(2, response.data[0]);
-      }
-  }
+      useEffect(() => {
+        getCart()
+      }, []);
 
     
     return (
         <div>
             {
-              <CartBody cart={cart}></CartBody>
+              <CartBody getCart={getCart}></CartBody>
             }
-            <div>
-        </div>
-        <button onClick={getCart}>버튼</button>
-        <button onClick={deleteCart}>삭제 버튼</button>
+          <button onClick={getCart}>버튼</button>
         </div>
     )
 }
+
+
+
+// --------------------------------------------------------
+
+
+
+
 
 function CartBody(props) {
 
   let [quantity, setQuantity] = useState(1);
 
+  let [total_amount, setTotal_Amount] = useState(0);
+
   let dispatch = useDispatch();
   const stock = useSelector((state) => state.stock)
+  const config = useSelector((state) => state.config)
 
-  useEffect(() => {
-    console.log(quantity)
-  }, [quantity]);
+  const deleteCart = async (params, callback) => {
+    let response = await axios.delete(
+      `http://localhost:8080/delete_cart?id=${params}`,
+      config
+    );
+    if (response.status === 200) {
+      console.log(2, response.data[0]);
+      if (callback) {
+        callback();
+      }
+    }
+  }
 
+  
   const handleButtonClick = (e, id) => {
     dispatch(addCount(id)); 
     setQuantity(e)
     // console.log()
   };
+  
+  const calculateTotalAmount = () => {
+    let sum = 0;
+    for (let i = 0; i < stock.length; i++) {
+      sum += stock[i].price * stock[i].count;
+    }
+    return sum;
+  };
 
-    return (
-        <div className='container myCart'>
+  let [stockName, setStockName] = useState("");
+
+  let state = {
+    cid: "TC0ONETIME",
+    partner_order_id: "partner_order_id",
+    partner_user_id: "partner_user_id",
+    item_name:  `${stockName}외 ${stock.length}종`,
+    item_code: "1",
+    quantity: 1,
+    total_amount: (total_amount + 2500) / 100,
+    vat_amount: 0,
+    tax_free_amount: 0,
+    approval_url: "http://localhost:3000/payresult",
+    fail_url: "http://localhost:3000/payresult?product=788&member=44&pay=fail",
+    cancel_url: "http://localhost:3000/payresult?product=788&member=4&pay=cencel"
+  }
+
+  const kakaoConfig = {
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+      "Authorization" : "KakaoAK 77671de1f3b849ee736e816accdad58b"
+    }
+  };
+  
+  const pay = async (state) => {
+    console.log(333333, state.item_code)
+    
+    let kakaoToken = await axios.post(
+      "/api3/payment/ready",
+      state,
+      kakaoConfig
+    );
+  
+    if (kakaoToken.status === 200) {
+      //console.log('kakao token data print11!!', kakaoToken.data);
+      //localStorage.setItem("jwtToken", kakaoToken.data);
+
+      // alert("결제 하려고 하고 있음");
+      window.localStorage.setItem("tid", kakaoToken.data.tid);
+      const url = kakaoToken.data.next_redirect_pc_url
+      window.location.replace(url);
+    }
+  }
+
+  let newCode = ""
+
+  useEffect(() => {
+    if (stock.length > 0) {
+      setStockName(stock[0].name);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log(quantity)
+  }, [quantity]);
+
+  useEffect(() => {
+    const newTotalAmount = calculateTotalAmount();
+    setTotal_Amount(newTotalAmount);
+  }, [stock]);
+
+  return (
+    <div className='container myCart'>
             <div className='header'>
                 <h1>장바구니</h1>
             </div>
@@ -112,11 +193,12 @@ function CartBody(props) {
                 {
                   stock.map((body, index) => (
                     <div className='cart_body'>
+                      <div style={{ display: 'none' }}>{body.id}</div>
                       <div id={index} className='cart_real'>{body.name}</div>
                       <div id={index} className='cart_real'>{ body.price }</div> 
                       {/* 나중에 할인값 불러와야함(스프링에서 처리) */}
                       <div id={index} className='cart_real'>{body.picture}</div>
-                      <div className="flex" style={{ marginTop: '20px' }}>
+                      <div className="cart_real">
                         <div style={{ display: 'flex', width:'300px'}}>
                           <h6>수량</h6>
                           <input
@@ -124,11 +206,25 @@ function CartBody(props) {
                             value={body.count}
                             min='0'
                             // onChange={(e) => setQuantity(Number(e.target.value))}
-                            onChange={(e) => dispatch(addCount(body.id, body.count)) 
+                            onChange={(e) => dispatch(addValue(body.id)) 
                             }
                             // setQuantity(quantity => ({ ...quantity, "count" : `${e.target.value}` }));
                           />
                         </div>
+                      </div>
+                      <div style={{ display: 'none' }}>
+                        {
+                          newCode += "," + String(body.productId)
+                        }
+                        {
+                          state.item_code = newCode.substring(1)
+                        }
+                        {
+                          console.log(stockName)
+                        }
+                      </div>
+                      <div id={index} className='cart_real'>
+                          <button onClick={() => { deleteCart(body.id, props.getCart) }}>삭제</button>
                       </div>
                     </div>  
                   ))
@@ -136,16 +232,20 @@ function CartBody(props) {
             </div>
             <div className='result px-5 py-5'>
                 <h6>총 상품가격</h6>
-                <h6>0</h6>
+                <h6>{total_amount}</h6>
                 <h6>원</h6>
                 <LiaPlusSolid></LiaPlusSolid>
                 <h6>총 배송비</h6>
-                <h6>0</h6>
+                <h6>2500</h6>
                 <h6>원</h6>
                 <LiaEqualsSolid></LiaEqualsSolid>
                 <h6>총 주문금액</h6>
-                <h6>0</h6>
+                <h6>{total_amount + 2500}</h6>
                 <h6>원</h6>
+            </div>
+            <div>
+              <button onClick={() => {pay(state)}}>구매하기</button>
+              <button onClick={() => { stockName = stock[0].name}}>길이</button>
             </div>
     </div>
     )

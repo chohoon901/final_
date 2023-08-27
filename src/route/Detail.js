@@ -5,14 +5,17 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
 import { data } from "../data";
 import moment from 'moment';
 
+import calculateTimeRemaining from "./calculateTimeRemaining";
 import Comment from "../component/Comment";
+import CountDownView from "./CountDownView";
 import axios from "axios";
 
 function Detail() {
 
-  let [product, setProduct] = useState(data)
-
   let [isOpen, setIsOpen] = useState(false)
+
+  const targetDate = new Date('2023-08-31T17:00:00');
+
   // let [quantity, setQuantity] = useState({
   //   "count" : 1
   // });
@@ -67,20 +70,25 @@ function Detail() {
     }
   };
   
+  let [product, setProduct] = useState({})
+  let [product1, setProduct1] = useState(data)
 
   const getProduct = async () => {
     let response = await axios.get(
-      `http://localhost:8080/show_product/${id}`,
+      `http://localhost:8080/get_product/${id}`,
       config
     );
     if (response.status === 200) {
-      console.log(2, response.data[0]);
+      console.log(3, response.data);
+      setProduct(response.data)
+      console.log(4, product);
     }
   }
 
   const postCart = async () => {
     console.log(5, quantity)
-    let response = await axios.post(
+    try {
+      let response = await axios.post(
       `http://localhost:8080/create_cart/${id}`,
       {
         "count" : `${quantity}`
@@ -89,8 +97,23 @@ function Detail() {
     );
     if (response.status === 200) {
       console.log(2, response.data[0]);
+      // window.location.href="/cart"
+      alert("물건이 추가되었습니다!");
     }
+  } catch (error) {
+    if(error.response && error.response.data) {
+      const errorMessage = error.response.data.message;
+      alert(errorMessage);
+    } else {
+      console.log('Another error occurred:', error.message);
+    }
+    window.location.reload();
+  }
   };
+
+  useEffect(() => {
+    getProduct()
+  }, []); 
 
   return (
     <div className="flex-container">
@@ -101,18 +124,18 @@ function Detail() {
               <img src={process.env.PUBLIC_URL + '/img/fan.jpg'} className="pt-5"></img>
             </div>
             <div className="col-md-6 left-align">
-              <h3 className="pt-5">{product[0].name}</h3>
-              <p>{product[0].comment_count}</p>
+              <h3 className="pt-5">{product.name}</h3>
+              <p>{product.comment_count}</p>
               {/* <If data={data}></If> */}
-              <h5 className="strikethrough-text">{product[0].price.toLocaleString('ko-KR')}\</h5>
+              <h5 className="strikethrough-text">{Number(product.price).toLocaleString('ko-KR')}\</h5>
               <h4>{
-                (product[0].price * product[0].disc).toLocaleString('ko-KR')
+                (Number(product.price) * Number(product.disc)).toLocaleString('ko-KR')
               }\</h4>
               <hr className="line-divider"/>
               <h6>배송정보</h6>
               <div className="flex">
-                  <h5 className="bold-marginright">- 오늘출발</h5>
-                  <h6 className="marginright"> 16 : 11 뒤 마감 </h6>
+                  <h5 className="bold-marginright">- 당일 배송</h5>
+                  <CountDownView targetDate={targetDate}></CountDownView>
                   <h6>(서울 경기 기준)</h6>
               </div>
               <h6 style={{ marginTop: '10px' }}>배송비</h6>
@@ -120,14 +143,7 @@ function Detail() {
                   <h5>- 2500원</h5>
               </div>
               <hr className="line-divider"/>
-              <h6>제품선택</h6>
-              <DropdownButton variant="secondary" title="옵션을 선택해주세요 ">
-                  <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                  <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-              </DropdownButton>
               <div className="flex" style={{ marginTop: '20px' }}>
-                  
                   <div style={{ display: 'flex', width:'300px'}}>
                     <h6>수량</h6>
                     <input
@@ -142,7 +158,7 @@ function Detail() {
               <hr className="line-divider"/>
               <div className="flex" style={{ marginBottom: '10px' }}>
                   <h6 style={{ marginRight: '15px' }}>가격</h6>
-                  <h6>19,990\</h6>
+                  <h6>{ (Number(product.price) * Number(product.disc) * quantity).toLocaleString('ko-KR') }\</h6>
               </div>
               <button onClick={postCart} className="btn btn-light no-radius" style={{ marginRight: '10px' }}>장바구니</button> 
               <button className="btn btn-info no-radius" onClick={() => {

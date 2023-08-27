@@ -24,7 +24,7 @@ function Pay() {
       total_amount: 2200,
       vat_amount: 0,
       tax_free_amount: 0,
-      approval_url: "http://localhost:3000/payresult?id=",
+      approval_url: "http://localhost:3000/payresult",
       fail_url: "http://localhost:3000/payresult?product=788&member=44&pay=fail",
       cancel_url: "http://localhost:3000/payresult?product=788&member=4&pay=cencel"
   }

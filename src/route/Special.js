@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Category from '../component/Category'
 import './style/Best.scss'
 import List from '../component/List'
 import axios from "axios";
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { setInputValue } from '../store';
+import { useParams } from 'react-router-dom';
 
 
 
@@ -17,21 +20,30 @@ const config = {
 
 function Special() {
 
+  let dispatch = useDispatch();
+  const isSearch = useSelector((state) => state.isSearch)
+  const inputValue = useSelector((state) => state.inputValue)
+  const change = useSelector((state) => state.change)
 
   const [products, setProducts] = useState([]);
 
-  const getAllProduct = async () => {
-    let response = await axios.get(
-      `http://localhost:8080/get_products/`,
-      config
-    );
-    if (response.status === 200) {
-      setProducts(response.data);
-    }
-  }
+  // const fetchData = async () => {
+  //   const response = await axios.get(
+  //     `http://localhost:8080/product_search?keyword=${encodeURIComponent(keyword)}`,
+  //     config // 설정에 따라 수정
+  //   );
+  //   if (response.status === 200) {
+  //     console.log(response.data) // 가져오는거 확인 완료
+  //   } 
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, [keyword])
 
   return (
     <div className='container'>
+      {/* <button onClick={() => {console.log(input)}}>버튼</button> */}
         <div className='best'>
             <Category></Category>
             <List title='특가'></List>
@@ -53,7 +65,7 @@ function Special() {
           </ul>
         </div>
         <div>
-        <button onClick={getAllProduct}>버튼</button>
+        {/* <button onClick={getAllProduct}>버튼</button> */}
         </div>
     </div>
   )
