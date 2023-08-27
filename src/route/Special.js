@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import Category from '../component/Category'
-import './style/Best.scss'
+import './style/Special.scss'
 import List from '../component/List'
 import axios from "axios";
 import { useState } from 'react'
@@ -43,8 +43,8 @@ function Special() {
 
   return (
     <div className='specialcontainer'>
+        <div className='best_container'>
             <Category></Category>
-        <div className='best'>
             <List title='특가'></List>
         </div>
         

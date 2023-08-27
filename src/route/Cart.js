@@ -67,8 +67,6 @@ function Cart() {
 
     let dispatch = useDispatch();
 
-    let dispatch = useDispatch();
-
     const getCart = async () => {
         let response = await axios.get(
           `http://localhost:8080/select_cart/`,
@@ -219,7 +217,6 @@ function CartBody(props) {
             </div>
             <div>
                 {
-                  stock.map((body, index) => (
                   stock.map((body, index) => (
                     <div className='cart_body'>
                       <div style={{ display: 'none' }}>{body.id}</div>

@@ -1,3 +1,9 @@
+.category_container {
+  border: 1px solid lightgray;
+  display: flex;
+  flex-direction: column;
+}
+
 .categoryNav {
    width: 15%;
    display: flex;
