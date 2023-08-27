@@ -27,19 +27,18 @@ function Special() {
 
   const [products, setProducts] = useState([]);
 
-  // const fetchData = async () => {
-  //   const response = await axios.get(
-  //     `http://localhost:8080/product_search?keyword=${encodeURIComponent(keyword)}`,
-  //     config // 설정에 따라 수정
-  //   );
-  //   if (response.status === 200) {
-  //     console.log(response.data) // 가져오는거 확인 완료
-  //   } 
-  // };
+  const getAllProduct = async () => {
+    let response = await axios.get(
+      `http://localhost:8080/get_products/`,
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, [keyword])
+      config
+    );
+    if (response.status === 200) {
+      setProducts(response.data);
+    }
+  }
+
+
 
   return (
     <div className='specialcontainer'>
@@ -65,7 +64,7 @@ function Special() {
           </ul>
         </div>
         <div>
-        {/* <button onClick={getAllProduct}>버튼</button> */}
+        { <button onClick={getAllProduct}>버튼</button> }
         </div>
     </div>
   )
