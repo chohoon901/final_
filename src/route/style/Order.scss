@@ -16,10 +16,26 @@
           color: rgb(51, 51, 51);
         }
     }
-    .orderbody {
-        margin: 20px;
-        padding: 20px;
-        border: 1px solid #ddd;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      }
+  }
+.orderbody {
+  display:flex;
+  flex-direction: row;
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@font-face {
+	font-family: 'SUITE_Variable';
+	font-weight: 300 900;
+	src: url('../../fonts/SUITE-Variable-woff2/SUITE-Variable.woff2') format('woff2-variations');
+}
+
+.eachorder{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  font-family: 'SUITE_Variable';
 }

@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Category from '../component/Category'
 import './style/Best.scss'
 import List from '../component/List'
 import axios from "axios";
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { setInputValue } from '../store';
+import { useParams } from 'react-router-dom';
 
 
 
@@ -17,6 +20,10 @@ const config = {
 
 function Special() {
 
+  let dispatch = useDispatch();
+  const isSearch = useSelector((state) => state.isSearch)
+  const inputValue = useSelector((state) => state.inputValue)
+  const change = useSelector((state) => state.change)
 
   const [products, setProducts] = useState([]);
 
@@ -57,7 +64,7 @@ function Special() {
           </ul>
         </div>
         <div>
-        <button onClick={getAllProduct}>버튼</button>
+        { <button onClick={getAllProduct}>버튼</button> }
         </div>
     </div>
   )

@@ -6,10 +6,11 @@ import axios from 'axios';
 
 
 function Comment(props) {
+
     // let server = useSelector((state) => {
     //     return state
     // })
-    let [comment, setComment] = useState({
+    let [comment, setComment] = useState({ 
       "body" : ""
     });
 
@@ -19,14 +20,12 @@ function Comment(props) {
       setComment(comment => ({ ...comment, "body" : `${event.target.value}` }));
     };
 
-
     const config = {
       headers: {
         "Content-Type": "application/json; charset=utf-8",
         "Authorization" : localStorage.getItem("jwtToken")
       }
     };
-
 
     const requestComment = async (request, callback) => {
         console.log(1, request);
@@ -37,25 +36,22 @@ function Comment(props) {
         );
         if (response.status === 200) {
           console.log(2, response.headers.Authorization);
+
           if (callback) {
             callback();
           }
         }
       }
 
-
       let [comments, setComments] = useState([]);
 
       const getComments = async () => {
         let response = await axios.get(
-          `http://localhost:8080/select_comment/${props.id}`,
+          `http://localhost:8080/show_comments/${props.id}`,
           config
         );
         if (response.status === 200) {
-          // console.log(2, response.data[0].body);
-          // comments = response.data.body;
-          // window.location.reload();
-          // console.log(2, response.data[0]);
+          console.log(2, response.data);
           const extractedBodies = response.data.map(item => item.body);
           setComments(extractedBodies);
         }
@@ -83,30 +79,30 @@ function Comment(props) {
 
       useEffect(() => {
         getComments();
-      }, []);
+      }, []); 
 
   return (
     <div className='comment'>
       <div className='comment_input'>
           <h2>댓글작성</h2>
-          <input
-          placeholder='댓글을 작성해주세요'
-          style={{ width: '70%', textAlign: 'left', padding: '10px' }}
+          <input 
+          placeholder='댓글을 작성해주세요' 
+          style={{ width: '55%', textAlign: 'left', padding: '10px', marginRight: '10px' }}
           onChange={saveComment}></input>
-          <button onClick={() => requestComment(comment, getComments)}>작성</button>
-          <button onClick={deleteComment}>삭제</button>
-          <button onClick={patchComment}>수정</button>
+          <button className='buttonDetail' onClick={() => requestComment(comment, getComments)}>작성</button>
+          <button className='buttonDetail' onClick={deleteComment}>삭제</button>
+          <button className='buttonDetail' onClick={patchComment}>수정</button>
       </div>
       <div className='comment_header'>
         {/* <button onClick={getComments}>조회</button> */}
-        <CommentBody id={props.id} comments={comments} setComments={setComments}></CommentBody>
+        <CommentBody id={props.id} comments={comments}></CommentBody>
       </div>
     </div>
   )
 }
 
-
 function CommentBody(props) {
+
   return (
       <div className='container_comment'>
         {
@@ -114,11 +110,12 @@ function CommentBody(props) {
             <div className='comment_body'>
               <h3 style={{ alignItems: "center" }}>{index + 1}</h3>
               <div id={index} className='comment_real'>{body}</div>
-            </div>
+            </div> 
           ))
         }
         {/* <button onClick={getComments}>버튼</button> */}
       </div>
   )
 }
+
 export default Comment
