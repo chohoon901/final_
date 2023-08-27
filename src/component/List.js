@@ -7,13 +7,13 @@ function List(props) {
 
     let [tab, setTab] = useState(0)
 
-    const [mainData, setMainData] = useState([]);
-    const [subData, setSubData] = useState([]);
+    // const [mainData, setMainData] = useState([]);
+    // const [subData, setSubData] = useState([]);
 
-    useEffect(() => {
-        bestMain();
-        bestSub();
-    }, []);
+    // useEffect(() => {
+    //     bestMain();
+    //     bestSub();
+    // }, []);
 
     return (
       <div className='row'>

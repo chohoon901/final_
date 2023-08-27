@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Button from '../component/Button.jsx';
-import './style/payment.scss';
+import './style/PayResult.scss';
 import axios from 'axios';
 
 const PaymentPage = () => {
