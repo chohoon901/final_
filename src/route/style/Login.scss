@@ -14,6 +14,13 @@
     display: block;
     margin: 0px;
   }
+
+  .custom-link {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
   
   .loginform {
       width: 340px;
