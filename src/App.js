@@ -44,6 +44,23 @@ function App() {
   let navigate = useNavigate()
   let [user, setUser] = useState(null);
 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // 페이지 로드 시 로컬 스토리지에서 로그인 상태 확인
+    const storedToken = localStorage.getItem('jwtToken');
+    if (storedToken) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+
+  const handleLogout = () => {
+    // 로그아웃 로직 처리 후 로컬 스토리지에서 토큰 삭제 및 로그인 상태 변경
+    localStorage.removeItem('jwtToken');
+    setIsLoggedIn(false);
+  };
+
   const config = {
     headers: {
       "Authorization": localStorage.getItem("jwtToken"),
@@ -71,9 +88,15 @@ function App() {
     <div className="App">
       <header className='navbar'>
         <Container>
-          <section className='login'>
-            <Link to="/signup" className='mya'>회원가입</ Link>
-            <Link to="/login" className='mya'>로그인</Link>
+        <section className='login'>
+            {isLoggedIn ? (
+              <div onClick={handleLogout} style={{ cursor: 'pointer' }}>로그아웃</div>
+            ) : (
+              <>
+                <Link to="/signup" className='mya'>회원가입</Link>
+                <Link to="/login" className='mya'>로그인</Link>
+              </>
+            )}
           </section>
         </Container>
         <Container>
@@ -150,6 +173,7 @@ function App() {
         <Route path="/mypage" element={
           <MyPage></MyPage>
         }>
+
           <Route index element={<Order />} />
             <Route path="order" element={
               <Order></Order>
@@ -236,6 +260,7 @@ function App() {
     </div>
   );
 }
+
 
 
 export default App;
