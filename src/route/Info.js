@@ -1,26 +1,43 @@
 import { useState } from 'react';
 import './style/Info.scss'
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from "axios";
 
 
 function Info() {
-  const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
-
-  const handlePasswordCheck = () => {
-    const 정확한비밀번호 = '실제비밀번호'; // 실제 비밀번호로 대체하세요
-    const 입력한비밀번호 = document.querySelector('input[name="password"]').value;
-
-    if (입력한비밀번호 === 정확한비밀번호) {
-      setIsPasswordCorrect(true);
-    } else {
-      setIsPasswordCorrect(false);
+  
+  
+  const config = {
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization" : localStorage.getItem("jwtToken")
     }
   };
+  
+  const [isPasswordCorrect, setIsPasswordCorrect] = useState(true);
+  const [password, setPassword] = useState('');
+  const history = useNavigate();
 
-  const handleNextPage = () => {
-    console.log('스프링 부트로 데이터 전송 처리');
-  };
+  const passwordCorrection = async () => {
+    try {
+    const response = await axios.post(
+      `http://localhost:8080/compare_password`,
+      { password },
+      config
+    );
+     if (response.status === 200 && response.data.isPasswordCorrect) {
+      setIsPasswordCorrect(true);
+      // console.log(2, response.headers.Authorization);
+      history('/infoform');
+     } else {
+      setIsPasswordCorrect(false);
+      alert("비밀번호가 틀렸습니다, 다시 시도해주세요.")
+    }
+  } catch (error) {
+
+  }
+};
 
   return (
     <div className='myinfo'>
@@ -36,13 +53,13 @@ function Info() {
         name="password"
         placeholder="비밀번호를 입력해 주세요"
         className='input'
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
       />
-      <button className='btn' onClick={handlePasswordCheck}>확인</button>
-      {isPasswordCorrect ? (
-        <div>
-          <Link to="/infoform.edit" className="btn">정보 수정</Link>
-        </div>
-      ) : (
+      <button className='btn' onClick={passwordCorrection}>
+        확인
+      </button>
+      {!isPasswordCorrect && (
         <div>
           <p>비밀번호가 올바르지 않습니다. 다시 시도해주세요.</p>
         </div>
