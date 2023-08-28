@@ -88,8 +88,9 @@ return (
               isPurple={true}
               onClick={()=>{ responseLogin(idpw) }}
             />
+            <Link to="/signup" className="custom-link">
             <Button name="회원가입" />
-
+            </Link>
             <div style={{display:"inline"}}>
                   <GoogleOAuthProvider clientId="261022339381-6ak2592qv7h3jotr3dq7ajt59j5qfdt7.apps.googleusercontent.com">
                     <GoogleLogin
