@@ -43,35 +43,9 @@ function Detail() {
   id = Number(id)
   
 
-  let [isLike, setIsLike] = useState(false)
-    
-  const addLike = async () => {
-    let response = ""
-    if (isLike == false) {
-      response = await axios.post(
-        `http://localhost:8080/create_mylike/${id}`,
-        {
-
-        },
-        config
-      );
-    } else {
-      response = await axios.delete(
-        `http://localhost:8080/delete_mylikeIn/${id}`,
-        {
-
-        },
-        config
-      );
-    }
-    if (response.status === 200) {
-      console.log(2, response.headers.Authorization);
-      setIsLike(!isLike)
-    }
-  };
   
-  let [product, setProduct] = useState({})
   let [product1, setProduct1] = useState(data)
+  let [product, setProduct] = useState({})
 
   const getProduct = async () => {
     let response = await axios.get(
@@ -109,6 +83,47 @@ function Detail() {
     }
     window.location.reload();
   }
+  };
+
+  let [isLike, setIsLike] = useState(false)
+
+  useEffect(() => {
+    // product.liked 값이 변경되었을 때만 isLike 값을 업데이트
+    setIsLike(product.liked);
+  }, [product.liked]);
+
+  const updatedIsLike = !isLike;
+
+  const addLike = async () => {
+    let response = ""
+    console.log(232323, isLike)
+    if (isLike === false) {
+      response = await axios.post(
+        `http://localhost:8080/create_mylike/${id}`,
+        {
+
+        },
+        config
+      );
+      if (response.status === 200) {
+        console.log(2, response.headers.Authorization);
+        alert("찜 목록에 저장되었습니다!")
+        setIsLike(updatedIsLike)
+      }
+    } else {
+      response = await axios.delete(
+        `http://localhost:8080/delete_detail_mylike/${id}`,
+        {
+
+        },
+        config
+      );
+      if (response.status === 200) {
+        console.log(2, response.headers.Authorization);
+        alert("찜 목록에서 제거되었습니다.")
+        setIsLike(updatedIsLike)
+      }
+    }
   };
 
   useEffect(() => {
@@ -169,9 +184,9 @@ function Detail() {
             <div className="col-md-1">
             <button onClick={addLike} className="pt-5" style={{ border: 'none', background: 'none', cursor: 'pointer' }}>
               {
-                isLike ?
-                <img src={process.env.PUBLIC_URL + '/img/colorheart.png'} alt="Like" /> : // 찜했을때
-                <img src={process.env.PUBLIC_URL + '/img/like.png'} alt="Like" />   // 찜 안했을때(기본값)
+                isLike 
+                ? <img src={process.env.PUBLIC_URL + '/img/colorheart.png'} alt="Like" /> 
+                : <img src={process.env.PUBLIC_URL + '/img/like.png'} alt="Like" />   // 찜 안했을때(기본값)
               }
             </button>
             </div>

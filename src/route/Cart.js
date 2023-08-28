@@ -67,8 +67,6 @@ function Cart() {
 
     let dispatch = useDispatch();
 
-    let dispatch = useDispatch();
-
     const getCart = async () => {
         let response = await axios.get(
           `http://localhost:8080/select_cart/`,
@@ -220,7 +218,6 @@ function CartBody(props) {
             <div>
                 {
                   stock.map((body, index) => (
-                  stock.map((body, index) => (
                     <div className='cart_body'>
                       <div style={{ display: 'none' }}>{body.id}</div>
                       <div id={index} className='cart_real'>{body.name}</div>
@@ -253,7 +250,7 @@ function CartBody(props) {
                         }
                       </div>
                       <div id={index} className='cart_real'>
-                          <button onClick={() => { deleteCart(body.id, props.getCart) }}>삭제</button>
+                          <button className="delete_button" onClick={() => { deleteCart(body.id, props.getCart) }}>삭제</button>
                       </div>
                     </div>  
                   ))
@@ -272,9 +269,9 @@ function CartBody(props) {
                 <h6>{total_amount + 2500}</h6>
                 <h6>원</h6>
             </div>
-            <div>
-              <button onClick={() => {pay(state)}}>구매하기</button>
-              <button onClick={() => { stockName = stock[0].name}}>길이</button>
+            <div className='quantity-container'>
+              <button className="purchase-button" onClick={() => {pay(state)}}>구매하기</button>
+              <button className="length-button" onClick={() => { stockName = stock[0].name}}>길이</button>
             </div>
     </div>
     )

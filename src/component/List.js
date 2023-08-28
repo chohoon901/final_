@@ -31,6 +31,11 @@ function List(props) {
               낮은 가격순
             </Nav.Link>
           </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link2" onClick={(mainsub) => { setTab(2) }}>
+              높은 할인율순
+            </Nav.Link>
+          </Nav.Item>
         </Nav>
         <TabContent tab={tab}></TabContent>
       </div>

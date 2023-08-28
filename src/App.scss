@@ -1,10 +1,25 @@
+@font-face {
+	font-family: 'SUITE_Variable';
+	font-weight: 300 900;
+	src: url('./fonts/SUITE-Variable-woff2/SUITE-Variable.woff2') format('woff2-variations');
+}
+
 .images {
   display: flex;
+  justify-content: center;
 }
 
 .temporary {
   display: flex;
-  justify-content: start;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 10px;
+}
+
+.product-details {
+  margin-top: 10px;
+  font-family: 'SUITE_Variable';
 }
 
 .navbar {

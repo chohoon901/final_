@@ -1,5 +1,5 @@
 import Search from 'antd/es/input/Search'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Button } from 'react'
 import queryString from 'query-string'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
@@ -117,10 +117,10 @@ function PayResult() {
 
   return (
     <div>
-      {/* 결제 내용 및 버튼
-      <button onClick={handlePaymentComplete}>Complete Payment</button> */}
+      결제 내용 및 버튼
+      <button onClick={handlePaymentComplete}>Complete Payment</button>
 
-      {/* 결제 완료 정보 */}
+      결제 완료 정보
       {paymentInfo && (
         <div>
           <h2>결제가 완료되었습니다.</h2>
