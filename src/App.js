@@ -22,6 +22,7 @@ import Footer from './component/Footer';
 import Pay from './route/Pay';
 import PayResult from './route/PayResult';
 import Search from './route/Search';
+import InfoForm from './route/InfoForm';
 
 import Mainbanner from './component/Mainbanner';
 import { useDispatch, useSelector } from 'react-redux';
@@ -150,7 +151,6 @@ function App() {
           <MyPage></MyPage>
         }>
           <Route index element={<Order />} />
-          <Route index element={<Order />} />
             <Route path="order" element={
               <Order></Order>
             }></Route>
@@ -159,6 +159,9 @@ function App() {
             }></Route>
             <Route path="info" element={
               <Info></Info>
+            }></Route>
+            <Route path="infoform" element={
+              <InfoForm></InfoForm>
             }></Route>
         </Route>
       </Routes>

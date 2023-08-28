@@ -12,10 +12,36 @@ export default function Signup() {
     }
   };
 
+  
+  const [memberData, setmemberData] = useState({
+    id: "",
+    address: "",
+    name: "",
+    password: "",
+    phone: "",
+    provider: "",
+    provider_id: "",
+    username: ""
+  });
 
+
+    const handleInputChange = (event) => {
+      const { name, value } = event.target;
+      setmemberData((prevData) => ({
+        ...prevData,
+        [name]: value,
+        username: value,  
+        address: value,   
+        name: value,      
+        password: value,  
+        phone: value      
+      }));
+    };
+  
   const postJoin = async () => {
     let response = await axios.post(
-      `http://localhost:8080/join/`,
+      `http://localhost:8080/join`,
+      JSON.stringify(memberData),
       config
     );
     if (response.status === 200) {
@@ -36,6 +62,7 @@ export default function Signup() {
             required
             placeholder="아이디를 입력해주세요"
             type="text"
+            onChange={handleInputChange}
           />
         </div>
         <div className='formGroup'>
@@ -45,6 +72,7 @@ export default function Signup() {
             required
             placeholder="비밀번호를 입력해주세요"
             type="password"
+            onChange={handleInputChange}
           />
         </div>
         <div className='formGroup'>
@@ -54,6 +82,16 @@ export default function Signup() {
             required
             placeholder="비밀번호를 다시 입력해주세요"
             type="password"
+            onChange={handleInputChange}
+          />
+        </div>
+        <div className='formGroup'>
+          <label htmlFor="password">주소</label>
+          <input
+            name="adress"
+            required
+            placeholder="주소를 입력해주세요"
+            onChange={handleInputChange}
           />
         </div>
         <div className='formGroup'>
@@ -62,6 +100,7 @@ export default function Signup() {
             name="displayName"
             required
             placeholder="이름을 입력해주세요"
+            onChange={handleInputChange}
           />
         </div>
         <div className='formGroup'>
@@ -71,6 +110,7 @@ export default function Signup() {
             required
             placeholder="휴대폰 번호를 입력해주세요"
             type="tel"
+            onChange={handleInputChange}
           />
         </div>
         <section className='btn'>
