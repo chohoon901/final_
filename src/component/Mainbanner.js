@@ -71,7 +71,7 @@ class Mainbanner extends Component {
           <MdArrowForwardIos style={{ position: 'absolute', top: '50%', right: 0 }} className="next-button" onClick={this.nextSlide}></MdArrowForwardIos>
         </div>
         <div className='images'>
-          <div className='my' style={{ marginTop: '5rem', marginBottom: '3rem' }}>
+          <div className='my_price' style={{ marginTop: '5rem', marginBottom: '3rem' }}>
               <h1>오늘의 특가</h1>
           </div>
           <div className='boundary'>

@@ -1,3 +1,9 @@
+@font-face {
+	font-family: 'SUITE_Variable';
+	font-weight: 300 900;
+	src: url('../../fonts/SUITE-Variable-woff2/SUITE-Variable.woff2') format('woff2-variations');
+}
+
 .myLike {
     margin-left: 2rem;
     width: 72%;
@@ -17,20 +23,31 @@
         }
     }
     .likebody {
+        font-family: 'SUITE_Variable';
         margin-top: 2rem;
     }
 }
+
+@font-face {
+	font-family: 'SUITE_Variable';
+	font-weight: 300 900;
+	src: url('../../fonts/SUITE-Variable-woff2/SUITE-Variable.woff2') format('woff2-variations');
+}
+
+
 .like_body {
+    font-family: 'SUITE_Variable';
     display: flex;
     margin: 2rem;
     justify-content: center;
     border-bottom: 1px solid gray;
-    height: 100px;
+    height: 150px;
 
     .button_container {
         display: flex;
         gap: 10px; // 버튼 사이 간격 조정
         flex-direction: row;
+        align-items: center;
     
         button {
           padding: 4px 4px; // 버튼 안의 콘텐츠와 버튼 자체의 크기를 조절
@@ -47,9 +64,12 @@
     }    
 }
 .like_real {
+    display: flex;
     width: 70%;
     padding-left: 25px;
     padding-top: 10px;
-    text-align: left;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }
 

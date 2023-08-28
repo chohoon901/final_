@@ -1,5 +1,5 @@
 import { useParams } from "react-router";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style/Like.scss'
 import axios from "axios";
 import Button from '../component/Button';
@@ -28,6 +28,11 @@ function Like() {
         );
         if (response.status === 200) {
           console.log(2, response.data);
+          if(response.data.length == 0) {
+            setIsExist(false)
+          } else {
+            setIsExist(true)
+          }
           setLike(response.data);
         }
     }
@@ -41,9 +46,12 @@ function Like() {
     //       console.log(response.data[0]);
     //     }
     // }
-    <LikeProduct like={like}  />
 
     // deleteLike={deleteLike}
+
+    useEffect(()=>{
+      getLike()
+    },[])
     
     return (
         <div className='myLike'>
@@ -55,11 +63,10 @@ function Like() {
                     isExist == true
                     ? <div>
                         <div>
-                        <LikeProduct like={like}></LikeProduct>
+                        <LikeProduct like={like} getLike={getLike}></LikeProduct>
                       </div>
-                      <button onClick={getLike}>불러오기</button>
                       </div>
-                    : <div> 상품없다 </div>
+                    : <div> 찜한 상품이 존재하지 않습니다 </div>
                 }
             </div>
         </div>
@@ -80,15 +87,18 @@ function LikeProduct(props) {
     }
 };
 
-  const deleteLike = async (id) => {
+  const deleteLike = async (id, callback) => {
     let response = await axios.delete(
       `http://localhost:8080/delete_mylike/?id=${encodeURIComponent(id)}`,
       config
     );
     if (response.status === 200) {
       console.log(response.data[0]);
+      if (callback) {
+        callback()
+      }
     }
-}
+  }
 
   const cartLike = async (id) => {
     let response = await axios.post(
@@ -123,11 +133,12 @@ function LikeProduct(props) {
                 {/* {console.log(body)} */}
               <div id={index} style={{ display: 'none' }}>{body.id}</div>
               <div id={index} className='like_real'>{body.name}</div>
-              <div id={index} className='like_real'>{ body.price * (1 - body.disc) }</div>
-              <div id={index} className='like_real'>{body.picture}</div>
+              <h5 id={index} className='like_real'>{ `${(body.price * (1 - body.disc)).toLocaleString('ko-KR')}₩` }</h5>
+              {/* <div id={index} className='like_real'>{body.picture}</div> */}
+              <img id={index} src={body.picture} className='like_real'></img>
               <div className='button_container'>
               <button onClick={() => cartLike(body.id)}>장바구니</button>
-              <button onClick={() => deleteLike(body.id)}>삭제</button>
+              <button onClick={() => deleteLike(body.id, props.getLike)}>삭제</button>
               </div>
             </div>
           ))

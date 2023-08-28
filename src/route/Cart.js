@@ -106,7 +106,7 @@ function CartBody(props) {
     partner_user_id: "partner_user_id",
     item_name:  `${stockName}외 ${stock.length}종`,
     item_code: "1",
-    quantity: 0,
+    quantity: 1,
     total_amount: (total_amount + 2500) / 100,
     vat_amount: 0,
     tax_free_amount: 0,
@@ -206,7 +206,7 @@ function CartBody(props) {
                     <div className='cart_body'>
                       <div style={{ display: 'none' }}>{body.id}</div>
                       <div id={index} className='cart_real'>{truncate(body.name, 30)}</div>
-                      <div id={index} className='cart_real'>{ body.price }</div> 
+                      <div id={index} className='cart_real'>{ body.price.toLocaleString('ko-KR') }</div> 
                       {/* 나중에 할인값 불러와야함(스프링에서 처리) */}
                       {/* <div id={index} className='cart_real'>{body.picture}</div> */}
                       <img src={body.picture} id={index} className='cart_real'></img>
@@ -260,7 +260,6 @@ function CartBody(props) {
             </div>
             <div className='quantity-container'>
               <button className="purchase-button" onClick={() => {pay(state)}}>구매하기</button>
-              <button className="length-button" onClick={() => { stockName = stock[0].name}}>길이</button>
             </div>
     </div>
     )

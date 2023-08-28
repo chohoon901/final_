@@ -89,6 +89,7 @@ function Detail() {
 
   useEffect(() => {
     // product.liked 값이 변경되었을 때만 isLike 값을 업데이트
+    console.log(isLike)
     setIsLike(product.liked);
   }, [product.liked]);
 
