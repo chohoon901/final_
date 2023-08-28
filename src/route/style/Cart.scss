@@ -50,48 +50,49 @@
     text-align: center;
     align-items: center;
 }
-.purchase-button {
-    padding: 4px 4px; // 버튼 안의 콘텐츠와 버튼 자체의 크기를 조절
-    font-size: 14px; // 버튼 내부 텍스트 크기 조절
-    // 추가적인 스타일 속성들을 여기에 추가할 수 있습니다.
-    width: 80px;
-    height: 40px;
-          // 배경색과 테두리 스타일 설정
-    color: white;
-    background-color: purple;
-    border: 0px none;
-    border-radius: 8px; // 테두리 각지게 설정
+.myCart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 4rem;
+    .header {
+        display: flex;
+        justify-content: flex-start;
+        border-bottom: 2px solid rgb(51, 51, 51);
+        padding-bottom: 1rem;
+        z-index: 200;
+        h1 {
+          font-size: 1.4rem;
+          font-weight: 800;
+          color: rgb(51, 51, 51);
+        }
+    }
+    .body {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
 }
-.length-button{
-    padding: 4px 4px; // 버튼 안의 콘텐츠와 버튼 자체의 크기를 조절
-    font-size: 14px; // 버튼 내부 텍스트 크기 조절
-    // 추가적인 스타일 속성들을 여기에 추가할 수 있습니다.
-    width: 80px;
-    height: 40px;
-          // 배경색과 테두리 스타일 설정
-    color: white;
-    background-color: purple;
-    border: 0px none;
-    border-radius: 8px; // 테두리 각지게 설정
-}
-.delete_button {
-    padding: 4px 4px; // 버튼 안의 콘텐츠와 버튼 자체의 크기를 조절
-    font-size: 14px; // 버튼 내부 텍스트 크기 조절
-    // 추가적인 스타일 속성들을 여기에 추가할 수 있습니다.
-    width: 80px;
-    height: 40px;
-          // 배경색과 테두리 스타일 설정
-    color: white;
-    background-color: purple;
-    border: 0px none;
-    border-radius: 8px; // 테두리 각지게 설정
-}
-.quantity-container {
+
+.result {
     display: flex;
     align-items: center;
-    justify-content: center; // 가로로 가운데 정렬
-    margin: 10px 0;
-    gap: 10px;
+    justify-content: space-evenly;
+    border: 1px solid rgb(208, 208, 208);
+}
+.cart_body {
+    display: flex;
+    margin: 2rem;
+    justify-content: center;
+    border-bottom: 1px solid gray;
+    height: 100px;
+    width: 95%;
+}
+.cart_real {
+    width: 70%;
+    padding-left: 25px;
+    padding-top: 10px;
+    text-align: left;
 }
 .purchase-button {
     padding: 4px 4px; // 버튼 안의 콘텐츠와 버튼 자체의 크기를 조절
