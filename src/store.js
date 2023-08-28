@@ -59,7 +59,12 @@ let orders = createSlice({
       addValue(state, id) {
           let num = state.findIndex(e => e.id == id.payload)
           state[num].count++
-      }  
+      } ,
+      cancelStatus(state, id) {
+        return state.map(order =>
+          order.id.payload === id.payload ? { ...order, orderStatus : "CANCEL" } : order
+        );
+      }
   }
 })
 
@@ -119,7 +124,7 @@ export let { setInputValue } = inputValue.actions
 
 export let { setSearch } = isSearch.actions
 
-export let { setOrders } = orders.actions
+export let { setOrders, cancelStatus } = orders.actions
 
 export let { addCount, minusCount , setCount } = stock.actions
 

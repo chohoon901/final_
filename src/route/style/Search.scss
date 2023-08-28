@@ -1,0 +1,21 @@
+@font-face {
+	font-family: 'SUITE_Variable';
+	font-weight: 300 900;
+	src: url('../../fonts/SUITE-Variable-woff2/SUITE-Variable.woff2') format('woff2-variations');
+}
+
+.search {
+    display: flex;
+}
+
+.search {
+    width: 80vw;
+}
+
+.recommend {
+    flex-direction: column;
+    border: 1px solid rgb(206, 182, 0);
+    border-radius: 2%;
+    height: auto;
+    font-family: 'SUITE_Variable';
+}

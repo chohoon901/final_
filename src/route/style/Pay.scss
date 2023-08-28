@@ -4,3 +4,45 @@
     margin: 2rem;
     flex-direction: row;
 }
+
+.cart_real {
+    width: 70%;
+    padding-left: 25px;
+    padding-top: 10px;
+    text-align: center;
+    align-items: center;
+}
+
+.pay_body {
+    font-family: 'SUITE_Variable';
+    display: flex;
+    margin: 2rem;
+    justify-content: center;
+    height: 100px;
+    width: 95%;
+}
+
+.myPay {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-top: 60px;
+    border-bottom: 1px solid gray;
+    .header {
+        display: flex;
+        justify-content: flex-start;
+        border-bottom: 2px solid rgb(51, 51, 51);
+        padding-bottom: 1rem;
+        z-index: 200;
+        h1 {
+          font-size: 1.4rem;
+          font-weight: 800;
+          color: rgb(51, 51, 51);
+        }
+    }
+    .body {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+    }
+}

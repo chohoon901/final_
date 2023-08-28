@@ -9,22 +9,6 @@ import { BiUpArrow, BiDownArrow } from "react-icons/bi";
 
 function Cart() {
 
-  // const handleIncrement = () => {
-  //   setQuantity((prevQuantity) => prevQuantity + 1);
-  // };
-
-  // const handleDecrement = () => {
-  //   setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
-  // };
-
-  // const handleIncrement = () => {
-  //   setQuantity((prevQuantity) => prevQuantity + 1);
-  // };
-
-  // const handleDecrement = () => {
-  //   setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
-  // };
-
     const config = {
         headers: {
           "Content-Type": "application/json; charset=utf-8",
@@ -34,35 +18,6 @@ function Cart() {
 
     let {id} = useParams()
     id = Number(id)
-
-    // const updateCart = async () => {
-    //   console.log(5, quantity)
-    //   let response = await axios.patch(
-    //     `http://localhost:8080/update_cart/`,
-    //     {
-    //       "count" : `${quantity}`
-    //     },
-    //     config
-    //   );
-    //   if (response.status === 200) {
-    //     console.log(2, response.data[0]);
-    //   }
-    // }
-
-    // const updateCart = async () => {
-    //   console.log(5, quantity)
-    //   let response = await axios.patch(
-    //     `http://localhost:8080/update_cart/`,
-    //     {
-    //       "count" : `${quantity}`
-    //     },
-    //     config
-    //   );
-    //   if (response.status === 200) {
-    //     console.log(2, response.data[0]);
-    //   }
-    // }
-
 
     let [cart, setCart] = useState([]);
 
@@ -151,11 +106,11 @@ function CartBody(props) {
     partner_user_id: "partner_user_id",
     item_name:  `${stockName}외 ${stock.length}종`,
     item_code: "1",
-    quantity: 1,
+    quantity: 0,
     total_amount: (total_amount + 2500) / 100,
     vat_amount: 0,
     tax_free_amount: 0,
-    approval_url: "http://localhost:3000/payresult",
+    approval_url: "http://localhost:3000/payresult?quantity=0",
     fail_url: "http://localhost:3000/payresult?product=788&member=44&pay=fail",
     cancel_url: "http://localhost:3000/payresult?product=788&member=4&pay=cencel"
   }

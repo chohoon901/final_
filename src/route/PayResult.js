@@ -19,7 +19,7 @@ function PayResult() {
       partner_user_id: "partner_user_id",
       pg_token: queryString.parse(window.location.search).pg_token
   }
-
+  let quantity = queryString.parse(window.location.search).quantity
   const kakaoConfig = {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
@@ -40,6 +40,8 @@ function PayResult() {
       state,
       kakaoConfig
     );
+
+    let response = {}
     
     if (kakaoToken.status === 200) {
       //console.log('kakao token data print11!!', kakaoToken.data);
@@ -47,7 +49,8 @@ function PayResult() {
       console.log('kakao token data print11!!', kakaoToken.data);
       console.log(2, kakaoToken.data.item_code)
       number.productIds = kakaoToken.data.item_code
-      console.log(3, number)
+      response = kakaoToken.data
+      console.log(3, response)
       // setCart(response.data, () => {
       //   console.log(cart)
       // });
@@ -63,7 +66,7 @@ function PayResult() {
   const saveOrder = async (number, callback) => {
     console.log(4, number)
     let response = await axios.post(
-      "http://localhost:8080/create_orderProduct",
+      `http://localhost:8080/create_orderProduct?quantity=${encodeURIComponent(quantity)}`,
       number,
       config
       );
@@ -104,38 +107,16 @@ function PayResult() {
       pay(state, (number) => saveOrder(number, getCart));
     }, []); 
 
-    const handlePaymentComplete = () => {
-      // 여기서 실제 결제 API를 호출하고, 결제 정보를 받아온다.
-      const mockPaymentData = {
-        payment_id: '1',
-        amount: 10000,
-        products: ['Product 1', 'Product 2'],
-      };
-  
-      setPaymentInfo(mockPaymentData);
-    };
-
   return (
     <div>
-      결제 내용 및 버튼
-      <button onClick={handlePaymentComplete}>Complete Payment</button>
-
-      결제 완료 정보
-      {paymentInfo && (
         <div>
           <h2>결제가 완료되었습니다.</h2>
-          <p>Payment ID: {paymentInfo.payment_id}</p>
-          <p>Amount: {paymentInfo.amount}</p>
+          <p>Payment ID:</p>
+          <p>Amount:</p>
           <p>결제 상품</p>
-          <ul>
-            {paymentInfo.products.map((product, index) => (
-              <li key={index}>{product}</li>
-            ))}
-          </ul>
-          <Button>홈</Button>
-          <Button>마이페이지</Button>
+          {/* <Button>홈</Button>
+          <Button>마이페이지</Button> */}
         </div>
-      )}
     </div>
   )
 }

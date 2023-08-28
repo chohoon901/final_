@@ -2,6 +2,7 @@ import { useParams } from "react-router";
 import './style/Detail.scss'
 import { useEffect, useState } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import { useNavigate } from 'react-router-dom';
 import { data } from "../data";
 import moment from 'moment';
 
@@ -42,7 +43,7 @@ function Detail() {
   let {id} = useParams()
   id = Number(id)
   
-
+  const navigate = useNavigate();
   
   let [product, setProduct] = useState({})
 
@@ -143,7 +144,7 @@ function Detail() {
               {/* <If data={data}></If> */}
               <h5 className="strikethrough-text">{Number(product.price).toLocaleString('ko-KR')}\</h5>
               <h4>{
-                (Number(product.price) * Number(product.disc)).toLocaleString('ko-KR')
+                (Number(product.price) * Number(1 - product.disc)).toLocaleString('ko-KR')
               }\</h4>
               <hr className="line-divider"/>
               <h6>배송정보</h6>
@@ -163,7 +164,7 @@ function Detail() {
                     <input
                       type="number"
                       value={quantity}
-                      min='0'
+                      min='1'
                       onChange={(e) => setQuantity(Number(e.target.value))}
                       // setQuantity(quantity => ({ ...quantity, "count" : `${e.target.value}` }));
                     />
@@ -172,11 +173,19 @@ function Detail() {
               <hr className="line-divider"/>
               <div className="flex" style={{ marginBottom: '10px' }}>
                   <h6 style={{ marginRight: '15px' }}>가격</h6>
-                  <h6>{ (Number(product.price) * Number(product.disc) * quantity).toLocaleString('ko-KR') }\</h6>
+                  <h6>{ (Number(product.price) * Number(1 - product.disc) * quantity).toLocaleString('ko-KR') }\</h6>
               </div>
               <button onClick={postCart} className="btn btn-light no-radius" style={{ marginRight: '10px' }}>장바구니</button> 
               <button className="btn btn-info no-radius" onClick={() => {
-                window.location.href="/pay"
+                navigate(`/pay`,{
+                  state: {
+                    "id" : id,
+                    "name": product.name,
+                    "picture": product.picture,
+                    "quantity": quantity,
+                    "price": (Number(product.price) * Number(1 - product.disc))
+                  }
+                })
               }}>구매하기</button> 
               
             </div>

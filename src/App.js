@@ -81,6 +81,17 @@ function App() {
     }
   };
 
+  const handleLinkClick = () => {
+    const jwtToken = localStorage.getItem("jwtToken");
+
+    if (jwtToken) {
+      navigate("/mypage/order");
+    } else {
+      alert("로그인 하셔야 합니다!");
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="App">
       <header className='navbar'>
@@ -110,9 +121,7 @@ function App() {
               </Link>
             </Col>
             <Col>
-              <Link to="/mypage">
-                <img src={process.env.PUBLIC_URL + '/img/user.png'}></img>
-              </Link>
+              <img style={{ cursor: "pointer" }} onClick={handleLinkClick} src={process.env.PUBLIC_URL + '/img/user.png'}></img>
             </Col>
           </Row>
         </Container>
@@ -134,7 +143,7 @@ function App() {
       </header>
 
       <Routes>
-        <Route path="/main" element={
+        <Route path="/main" component={Mainbanner} element={
           <Mainbanner></Mainbanner>
         }></Route>
         <Route path="/pay" element={
@@ -177,69 +186,6 @@ function App() {
             }></Route>
         </Route>
       </Routes>
-
-      <button onClick={checkToken}>
-        인증정보
-      </button>
-      <h4>{user}</h4>
-
-      <div className='images'>
-        <div className='temporary'>
-          <Link to={"/detail/" + 2}>
-            {/* TODO : 0자리에 데이터에서 id값 받아오기 */}
-            {/* <img style={{ height : '345px' }} src={process.env.PUBLIC_URL + '/img/fan.jpg'}></img> */}
-            <img style={{ height : '200px' }} src="http://thumbnail9.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/46e3/ae7faa474e37f464ddfd8cec8e52b63678f8911c50f06051891af4656eed.jpg"></img>
-          </Link>
-          <div className="product-details">
-          <div>템피아 대형제습기</div>
-          <div>738000원</div>
-          </div>
-        </div>
-        <div className='temporary'>
-          <Link to={"/detail/" + 3}>
-            {/* TODO : 0자리에 데이터에서 id값 받아오기 */}
-            {/* <img style={{ height : '345px' }} src={process.env.PUBLIC_URL + '/img/fan.jpg'}></img> */}
-            <img style={{ height : '200px' }} src="http://thumbnail8.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/2b3a/e1f41dc2a98e8257365f7dec7c9028aa64e5f6d7af34528cb7e5d5a6805e.jpg"></img>
-          </Link>
-          <div className="product-details">
-          <div>신일 산업용제습기</div>
-          <div>1390900원</div>
-          </div>
-        </div>
-        <div className='temporary'>
-          <Link to={"/detail/" + 4}>
-            {/* TODO : 0자리에 데이터에서 id값 받아오기 */}
-            {/* <img style={{ height : '345px' }} src={process.env.PUBLIC_URL + '/img/fan.jpg'}></img> */}
-            <img style={{ height : '200px' }} src="http://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/031e/6ee1aabb639961a532ebe0b3c44a1daf8c680554ff6e05952fe4668cd051.jpg"></img>
-          </Link>
-          <div className="product-details">
-          <div>단미 DA-APD01</div>
-          <div>18000원</div>
-          </div>
-        </div>
-        <div className='temporary'>
-          <Link to={"/detail/" + 5}>
-            {/* TODO : 0자리에 데이터에서 id값 받아오기 */}
-            {/* <img style={{ height : '345px' }} src={process.env.PUBLIC_URL + '/img/fan.jpg'}></img> */}
-            <img style={{ height : '200px' }} src="http://thumbnail6.coupangcdn.com/thumbnails/remote/230x230ex/image/retail/images/58741107384460-4b3100d4-4d1e-40b1-9505-a7d3db71ecc0.jpg"></img>
-          </Link>
-          <div className="product-details">
-          <div>신일 인공지능 제습기</div>
-          <div>209000원</div>
-          </div>
-        </div>
-        <div className='temporary'>
-          <Link to={"/detail/" + 6}>
-            {/* TODO : 0자리에 데이터에서 id값 받아오기 */}
-            {/* <img style={{ height : '345px' }} src={process.env.PUBLIC_URL + '/img/fan.jpg'}></img> */}
-            <img style={{ height : '200px' }} src="http://thumbnail6.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/d153/2fb762447920a9283b9a20b141e03fd3756b8cc88e802474aa083cc6a624.jpg"></img>
-          </Link>
-          <div className="product-details">
-          <div>신일 대형 업소용</div>
-          <div>588000원</div>
-          </div>
-        </div>
-      </div>
       
         <div className="Footer">
       <Footer />
