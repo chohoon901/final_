@@ -55,11 +55,11 @@ class Mainbanner extends Component {
     return (
       <div className="image-slider" onMouseEnter={this.stopTimer} onMouseLeave={this.startTimer}>
         <button className="prev-button" onClick={this.prevSlide}>
-          Previous
+          
         </button>
         <img className="slide-image" src={images[currentIndex]} alt={`Slide ${currentIndex}`} />
         <button className="next-button" onClick={this.nextSlide}>
-          Next
+          
         </button>
       </div>
     );

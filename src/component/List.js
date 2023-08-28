@@ -138,36 +138,4 @@ function TabContent({special, dataSlice}) {
   );
 }
 
-function mainsub() {
-  const config = {
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Authorization" : localStorage.getItem("jwtToken")
-    }
-  };
-  
-
-    const bestMain = async () => {
-        let response = await axios.post(
-          `http://localhost:8080/best_mainCategory/`,
-          
-          config
-        );
-        if (response.status === 200) {
-          bestMain(response.data);
-        }
-      }
-      
-    const bestSub = async () => {
-        let response = await axios.post(
-          `http://localhost:8080/best_subCategory/`,
-          
-          config
-        );
-        if (response.status === 200) {
-          bestSub(response.data);
-        }
-      }
-}
-
 export default List
