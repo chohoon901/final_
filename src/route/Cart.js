@@ -4,7 +4,8 @@ import axios from "axios";
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from 'react-redux';
-import { addCount, addValue, setCount } from '../store';
+import { addCount, minusCount, setCount } from '../store';
+import { BiUpArrow, BiDownArrow } from "react-icons/bi";
 
 function Cart() {
 
@@ -74,10 +75,6 @@ function Cart() {
         );
         if (response.status === 200) {
           console.log(2, response.data);
-          dispatch(setCount(response.data))
-          setCart(response.data, () => {
-            console.log(cart)
-          });
           dispatch(setCount(response.data))
           setCart(response.data, () => {
             console.log(cart)
@@ -190,6 +187,28 @@ function CartBody(props) {
     }
   }
 
+  const plusCountaxios = async (request) => {
+    let response = await axios.patch(
+      "http://localhost:8080/update_cart",
+      {
+        id: request,
+        updown: 1
+      },
+      config
+    );
+  }
+
+  const deleteCountaxios = async (request) => {
+    let response = await axios.patch(
+      "http://localhost:8080/update_cart",
+      {
+        id: request,
+        updown: 0
+      },
+      config
+    );
+  }
+
   let newCode = ""
 
   useEffect(() => {
@@ -207,35 +226,50 @@ function CartBody(props) {
     setTotal_Amount(newTotalAmount);
   }, [stock]);
 
+  const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  };
+
+  const handleIncrement = (id) => {
+    dispatch(addCount(id));
+    plusCountaxios(id)
+  };
+
+  const handleDecrement = (id) => {
+    dispatch(minusCount(id));
+    deleteCountaxios(id)
+  };
+
   return (
     <div className='container myCart'>
             <div className='header'>
                 <h1>장바구니</h1>
-            </div>
-            <div className='container body'>
-                <div> map 사용해서 물품 나열 </div>
             </div>
             <div>
                 {
                   stock.map((body, index) => (
                     <div className='cart_body'>
                       <div style={{ display: 'none' }}>{body.id}</div>
-                      <div id={index} className='cart_real'>{body.name}</div>
+                      <div id={index} className='cart_real'>{truncate(body.name, 30)}</div>
                       <div id={index} className='cart_real'>{ body.price }</div> 
                       {/* 나중에 할인값 불러와야함(스프링에서 처리) */}
-                      <div id={index} className='cart_real'>{body.picture}</div>
+                      {/* <div id={index} className='cart_real'>{body.picture}</div> */}
+                      <img src={body.picture} id={index} className='cart_real'></img>
                       <div className="cart_real">
-                        <div style={{ display: 'flex', width:'300px'}}>
+                        <div style={{ display: 'flex', justifyContent: "center",width:'300px'}}>
                           <h6>수량</h6>
                           <input
                             type="number"
                             value={body.count}
                             min='0'
-                            // onChange={(e) => setQuantity(Number(e.target.value))}
-                            onChange={(e) => dispatch(addValue(body.id)) 
-                            }
                             // setQuantity(quantity => ({ ...quantity, "count" : `${e.target.value}` }));
                           />
+                          <button onClick={()=>{ handleIncrement(body.id) }}>
+                            <BiUpArrow></BiUpArrow>
+                          </button>
+                          <button onClick={()=>{ handleDecrement(body.id) }}>
+                            <BiDownArrow></BiDownArrow>
+                          </button>
                         </div>
                       </div>
                       <div style={{ display: 'none' }}>

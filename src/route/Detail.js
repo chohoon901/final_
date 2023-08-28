@@ -71,7 +71,6 @@ function Detail() {
   };
   
   let [product, setProduct] = useState({})
-  let [product1, setProduct1] = useState(data)
 
   const getProduct = async () => {
     let response = await axios.get(
@@ -121,7 +120,7 @@ function Detail() {
       <div className="container">
           <div className="row">
             <div className="col-md-5">
-              <img src={process.env.PUBLIC_URL + '/img/fan.jpg'} className="pt-5"></img>
+              <img src={product.picture} className="pt-5"></img>
             </div>
             <div className="col-md-6 left-align">
               <h3 className="pt-5">{product.name}</h3>

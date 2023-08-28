@@ -66,6 +66,21 @@ function App() {
     dispatch(setChange(change+1))
   };
 
+  const handleSubmit2 = (e) => {
+    if (e) {
+      e.preventDefault(); // 이벤트 전파 중지
+    }
+    dispatch(setSearch(true))
+    dispatch(setChange(change+1))
+    navigate(`/search/${inputValue}`);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit2(e);
+    }
+  };
+
   return (
     <div className="App">
       <header className='navbar'>
@@ -78,7 +93,7 @@ function App() {
         <Container>
           <Navbar.Brand href="#home">SummerMart</Navbar.Brand>
           <div className='searchContainer'>
-          <input className='searchInput' value={inputValue} onChange={(e) => {handleInputChange(e)}} type="text" placeholder="검색어를 입력해 주세요"></input>
+          <input className='searchInput' value={inputValue} onChange={(e) => {handleInputChange(e)}} type="text" placeholder="검색어를 입력해 주세요" onKeyDown={(e) => {handleKeyDown(e)}}></input>
           <Link to={`/search/${inputValue}`} className="searchIcon">
             <img onClick={() => { handleSubmit() }} src={process.env.PUBLIC_URL + '/img/search.png'} alt="검색"></img>
           </Link>  

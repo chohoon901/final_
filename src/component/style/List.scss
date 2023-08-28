@@ -1,3 +1,9 @@
+@font-face {
+	font-family: 'SUITE_Variable';
+	font-weight: 300 900;
+	src: url('../../fonts/SUITE-Variable-woff2/SUITE-Variable.woff2') format('woff2-variations');
+}
+
 .row {
     margin-left: 2rem;
     .listTitle {
@@ -20,8 +26,24 @@
     }
     .content {
         margin-top: 2rem;
+        .col {
+            h5{
+                width: 290px;
+                height: 80px;
+                margin-top: 10px;
+            }
+        }
     }
 }
+
+.discount-price{
+    font-family: 'SUITE_Variable';
+}
+
+.original-price {
+    text-decoration: line-through;
+}
+
 
 .gray-line {
     border: none;
@@ -32,7 +54,7 @@
   .pagination-container {
     display: flex;
     justify-content: center;
-    margin-top: 20px; 
+    margin-top: 4rem; 
     
     
   }

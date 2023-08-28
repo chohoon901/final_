@@ -2,18 +2,47 @@ import React, { useState, useEffect } from 'react'
 import './style/List.scss'
 import { Nav, Pagination } from 'react-bootstrap'
 import axios from "axios";
+import products from "../listTestData"
+import dropdownItems from '../dropDownItems';
+import { useDispatch, useSelector } from 'react-redux';
+import { setDataSlice, setSpecial } from '../store';
+
 
 function List(props) {
 
+  
+  // const [mainData, setMainData] = useState([]);
+  // const [subData, setSubData] = useState([]);
+  
+    // useEffect(() => {
+      //     bestMain();
+      //     bestSub();
+    // }, []);
+
+    const config = useSelector((state) => state.config)
+
+    const special = useSelector((state) => state.special)
+
     let [tab, setTab] = useState(0)
 
-    // const [mainData, setMainData] = useState([]);
-    // const [subData, setSubData] = useState([]);
+    let dispatch = useDispatch();
+    const dataSlice = useSelector((state) => state.dataSlice)
 
-    // useEffect(() => {
-    //     bestMain();
-    //     bestSub();
-    // }, []);
+    const bestSub = async () => {
+      let response = await axios.post(
+        `http://localhost:8080/best_subCategory/`,
+        special,
+        config
+      );
+      if (response.status === 200) {
+        console.log(response.data)
+        dispatch(setDataSlice(response.data))
+      }
+    }
+
+    useEffect(()=>{
+      bestSub()
+    }, [special])
 
     return (
       <div className='row'>
@@ -22,32 +51,40 @@ function List(props) {
         </div>
         <Nav variant="underline" defaultActiveKey="link0">
           <Nav.Item>
-            <Nav.Link eventKey="link0" onClick={(mainsub) => { setTab(0) }}>
+            <Nav.Link eventKey="link0" onClick={() => { setTab(0); dispatch(setSpecial({ ...special, sortBy: "price", sortDirection: "desc" })); }}>
               높은 가격순
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link eventKey="link1" onClick={(mainsub) => { setTab(1) }}>
+            <Nav.Link eventKey="link1" onClick={() => { setTab(1); dispatch(setSpecial({ ...special, sortBy: "price", sortDirection: "asc" })); }}>
               낮은 가격순
             </Nav.Link>
           </Nav.Item>
+          <Nav.Item>
+            <Nav.Link eventKey="link2" onClick={() => { setTab(2); dispatch(setSpecial({ ...special, sortBy: "disc", sortDirection: "desc" })); }}>
+              높은 할인순
+            </Nav.Link>
+          </Nav.Item>
         </Nav>
-        <TabContent tab={tab}></TabContent>
+        <TabContent special={special} dataSlice={dataSlice}></TabContent>
       </div>
     )
 }
 
 
 
-function TabContent({tab}) {
-
-
-
+function TabContent({special, dataSlice}) {
   const [activePage, setActivePage] = useState(1); // 활성화된 페이지 상태
-
+  let dispatch = useDispatch();
   // 페이지 번호 클릭 시 활성화 페이지를 변경하는 함수
   const handlePageClick = (pageNumber) => {
     setActivePage(pageNumber);
+    const updatedSpecial = {
+      ...special,
+      pageNumber: pageNumber - 1
+    };
+
+    dispatch(setSpecial(updatedSpecial));
   };
 
   let items = [];
@@ -64,61 +101,40 @@ function TabContent({tab}) {
   }
 
   const paginationBasic = (
-    <div className="pagination">
+    <div className="pagination-container">
       <Pagination>{items}</Pagination>
       <br />
     </div>
   );
 
+  const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  };
+
     return (
       <div>
-        <ProductList />
+        <div className='content'>
+          <div className='row row-cols-4'>
+            {
+              dataSlice.map((body, index) => (
+                <div className='col' onClick={() => {window.location.href=`/detail/${body.id}`}} key={index} style={{ cursor: 'pointer' }}>
+                  <div className='product-item'>
+                    <div style={{ display: 'none' }}>{body.id}</div>
+                    <img src={body.picture} alt={body.name} style={{ width: '200px', height: '200px' }} />
+                    <h5 className='discount-price'>{truncate(body.name, 60)}</h5>
+                    <div style={{ marginTop: 'auto', marginBottom: '10px' }}>
+                      <p className={body.disc === 0 ? "discount-price" : "original-price"}>{`${body.price.toLocaleString('ko-KR')}₩`}</p>
+                      <h5 className='discount-price'>{ body.disc === 0 ? "" : `${Math.floor(body.disc*100)}% >> ${Math.floor(body.price * (1 - body.disc)).toLocaleString('ko-KR')}₩`}</h5>
+                    </div>
+                  </div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
         <hr className="gray-line" />
-        <ProductList />
-      <div>{paginationBasic}</div>
+        <div>{paginationBasic}</div>
       </div>
-      
-  );
-}
-
-function ProductList() {
-  return (
-    <div className='content'>
-    <div className='row row-cols-4'>
-      <div className='col'>
-        <div className='product-item'>
-          <img src='http://thumbnail8.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/2b3a/e1f41dc2a98e8257365f7dec7c9028aa64e5f6d7af34528cb7e5d5a6805e.jpg' alt='Product 1' style={{ width: '200px', height: '200px' }} />
-          <h5>신일 산업용제습기</h5>
-          <p className='original-price'>가격: 699000원</p>
-          <p className='discount-price'>할인 가격: 원</p>
-        </div>
-      </div>
-      <div className='col'>
-        <div className='product-item'>
-          <img src='http://thumbnail9.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/46e3/ae7faa474e37f464ddfd8cec8e52b63678f8911c50f06051891af4656eed.jpg' alt='Product 2' style={{ width: '200px', height: '200px' }} />
-          <h5>템피아 대형제습기</h5>
-          <p className='original-price'>가격: 738000원</p>
-          <p className='discount-price'>할인 가격: 원</p>
-        </div>
-      </div>
-      <div className='col'>
-        <div className='product-item'>
-          <img src='http://thumbnail8.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/2b3a/e1f41dc2a98e8257365f7dec7c9028aa64e5f6d7af34528cb7e5d5a6805e.jpg' alt='Product 3' style={{ width: '200px', height: '200px' }} />
-          <h5>신일 산업용제습기</h5>
-          <p className='original-price'>가격: 1390900원</p>
-          <p className='discount-price'>할인 가격: 원</p>
-        </div>
-      </div>
-      <div className='col'>
-        <div className='product-item'>
-          <img src='http://thumbnail7.coupangcdn.com/thumbnails/remote/230x230ex/image/vendor_inventory/031e/6ee1aabb639961a532ebe0b3c44a1daf8c680554ff6e05952fe4668cd051.jpg' alt='Product 4' style={{ width: '200px', height: '200px' }} />
-          <h5>단미 DA-APD01</h5>
-          <p className='original-price'>가격: 18000원</p>
-          <p className='discount-price'>할인 가격: 원</p>
-        </div>
-      </div>
-    </div>
-  </div>
   );
 }
 

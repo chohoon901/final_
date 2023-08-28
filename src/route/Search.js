@@ -40,11 +40,12 @@ function Search() {
     
     const getAllProduct = async () => {
       const response = await axios.get(
-          `http://localhost:8080/product_search?keyword=${encodeURIComponent(keyword)}`,
+      `http://localhost:8080/product_search?keyword=${encodeURIComponent(keyword)}`,
       config // 설정에 따라 수정
     );
     if (response.status === 200) {
       console.log(response.data) // 가져오는거 확인 완료
+      setProducts(response.data)
     } 
 
     };
@@ -57,34 +58,47 @@ function Search() {
     useEffect(() => {
       getAllProduct();
     }, [keyword])
+
+    const truncate = (str, n) => {
+      return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+    };
   
   return (
     <div className='container'>
       <button onClick={() => {console.log(input)}}>버튼</button>
-        <div className='best'>
-          {
-            <List title='검색 결과'></List>
-          }
+      <div className='row'>
+        <div className='listTitle'>
+            <h2>검색 결과</h2>
         </div>
         <div className='ProductList'>
           <h1></h1>
-          <ul>
-            {products.map(product => (
-              <li key={product.id}>
-                <div>
-                  <img src={product.picture} alt={product.name} />
+              <div>
+              <div className='content'>
+                <div className='row row-cols-4'>
+                  {
+                    products.map((body, index) => (
+                      <div className='col' onClick={() => {window.location.href=`/detail/${body.id}`}} key={index} style={{ cursor: 'pointer' }}>
+                        <div className='product-item'>
+                          <div style={{ display: 'none' }}>{body.id}</div>
+                          <img src={body.picture} alt={body.name} style={{ width: '200px', height: '200px' }} />
+                          <h5 className='discount-price' style={{ width: '235px', height: '100px' }}>{truncate(body.name, 40)}</h5>
+                          <div style={{ marginTop: 'auto', marginBottom: '10px' }}>
+                            <p className={body.disc === 0 ? "discount-price" : "original-price"}>{`${body.price.toLocaleString('ko-KR')}₩`}</p>
+                            <h5 className='discount-price'>{ body.disc === 0 ? "" : `${Math.floor(body.disc*100)}% >> ${Math.floor(body.price * (1 - body.disc)).toLocaleString('ko-KR')}₩`}</h5>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  }
                 </div>
-                <div>
-                  <h3>{product.name}</h3>
-                  <p>가격: {product.price}원</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+              </div>
+              <hr className="gray-line" />
+            </div>
         </div>
         <div>
         <button onClick={getAllProduct}>버튼</button>
         </div>
+      </div>
     </div>
   )
 }

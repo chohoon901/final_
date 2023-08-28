@@ -21,6 +21,16 @@ let config = createSlice({
   }
 })
 
+let dataSlice = createSlice({
+  name: 'dataSlice',
+  initialState : [],
+  reducers: {
+      setDataSlice(state, action) {
+        return action.payload;
+      }
+  }
+})
+
 let stock = createSlice({
   name : 'stock',
   initialState : [],
@@ -28,29 +38,14 @@ let stock = createSlice({
       setCount(state, action) {
         return action.payload; // API에서 받아온 데이터로 상태를 업데이트
       },
-      addCount(state, action) {
-          const [ id, count1 ] = action.payload;
-          let num = state.findIndex(e => e.id == id)
-          // console.log("id", id.payload)
-          console.log("addCount = action", action)
-          console.log("addCount = id", id)
-          console.log("addCount = count1", count1)
-          // state[num].count++;
-
-          // if (num !== -1) { // num이 유효한 인덱스인지 확인
-          //   if (count1 > state[num]?.count) { // count 변수를 사용하여 비교
-          //     state[num].count++;
-          //   } else {
-          //     state[num].count--;
-          //   }
-          // } else {
-          //   console.log(num)
-          // }
-      },
-      addValue(state, id) {
+      addCount(state, id) {
           let num = state.findIndex(e => e.id == id.payload)
           state[num].count++
-      }  
+      },
+      minusCount(state, id) {
+        let num = state.findIndex(e => e.id == id.payload)
+        state[num].count--
+    }  
   }
 })
 
@@ -98,6 +93,26 @@ let change = createSlice({
   }
 })
 
+let special = createSlice({
+  name : 'special',
+  initialState : { 
+    "pageNumber" : 0,
+    "categoryName" : "스킨",
+    "sortBy" : "price",
+    "sortDirection" : "desc"
+  },
+  reducers : {
+      setSpecial(state, action) {
+        console.log(111, action.payload)
+        return action.payload; // API에서 받아온 데이터로 상태를 업데이트
+      }
+  }
+})
+
+export let { setSpecial } = special.actions
+
+export let { setDataSlice } = dataSlice.actions
+
 export let { setChange } = change.actions
 
 export let { setInputValue } = inputValue.actions
@@ -106,7 +121,7 @@ export let { setSearch } = isSearch.actions
 
 export let { setOrders } = orders.actions
 
-export let { addCount , addValue, addCart, setCount } = stock.actions
+export let { addCount, minusCount , setCount } = stock.actions
 
 export default configureStore({
 reducer: {
@@ -117,6 +132,8 @@ reducer: {
   orders : orders.reducer,
   isSearch : isSearch.reducer,
   inputValue : inputValue.reducer,
-  change : change.reducer
+  change : change.reducer,
+  dataSlice : dataSlice.reducer,
+  special : special.reducer
 }
 })
