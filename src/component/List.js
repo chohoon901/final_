@@ -121,10 +121,14 @@ function TabContent({special, dataSlice}) {
                   <div className='product-item'>
                     <div style={{ display: 'none' }}>{body.id}</div>
                     <img src={body.picture} alt={body.name} style={{ width: '200px', height: '200px' }} />
-                    <h5 className='discount-price'>{truncate(body.name, 60)}</h5>
-                    <div style={{ marginTop: 'auto', marginBottom: '10px' }}>
-                      <p className={body.disc === 0 ? "discount-price" : "original-price"}>{`${body.price.toLocaleString('ko-KR')}₩`}</p>
-                      <h5 className='discount-price'>{ body.disc === 0 ? "" : `${Math.floor(body.disc*100)}% >> ${Math.floor(body.price * (1 - body.disc)).toLocaleString('ko-KR')}₩`}</h5>
+                    <div className='content_body'>
+                      <div className='h5_body'>
+                        <h5 className='discount-price' style={{ alignItems: 'center' }}>{truncate(body.name, 60)}</h5>
+                      </div>
+                      <div className='h5_body' style={{ marginTop: 'auto', marginBottom: '10px' }}>
+                        <p className={body.disc === 0 ? "discount-price" : "original-price"}>{`${body.price.toLocaleString('ko-KR')}₩`}</p>
+                        <h5 className='discount-price'>{ body.disc === 0 ? "" : `${Math.floor(body.disc*100)}% >> ${Math.floor(body.price * (1 - body.  disc)).toLocaleString('ko-KR')}₩`}</h5>
+                      </div>
                     </div>
                   </div>
                 </div>

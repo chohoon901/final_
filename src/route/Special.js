@@ -27,19 +27,6 @@ function Special() {
 
   const [products, setProducts] = useState([]);
 
-  const getAllProduct = async () => {
-    let response = await axios.get(
-      `/api4/get_products/`,
-
-      config
-    );
-    if (response.status === 200) {
-      setProducts(response.data);
-    }
-  }
-
-
-
   return (
     <div className='specialcontainer'>
         <div className='best_container'>
@@ -64,7 +51,6 @@ function Special() {
           </ul>
         </div>
         <div>
-        { <button onClick={getAllProduct}>버튼</button> }
         </div>
     </div>
   )

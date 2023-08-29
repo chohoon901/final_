@@ -178,10 +178,6 @@ function App() {
               navigate('/special')
             }} className='bar mya'>특가</Nav.Link>
           </Nav>
-          <div className='rank'>
-            1. 펩시제로
-            <img src={process.env.PUBLIC_URL + '/img/arrowdown.png'}></img>
-          </div>
         </Container>
       </header>
 

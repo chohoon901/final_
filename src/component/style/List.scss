@@ -28,12 +28,28 @@
         margin-top: 2rem;
         .col {
             h5{
+                display: flex;
+                justify-content: center;
                 width: 226px;
                 height: 80px;
-                margin-top: 10px;
-                margin-right: 0;
+                
             }
         }
+    }
+}
+
+.content_body {
+    display: flex; 
+    flex-direction: column;
+}
+
+.h5_body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    h5 {
+
     }
 }
 
