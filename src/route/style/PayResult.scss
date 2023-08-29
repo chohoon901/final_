@@ -1,32 +1,15 @@
-.payment-page {
+@font-face {
+	font-family: 'SUITE_Variable';
+	font-weight: 300 900;
+	src: url('../../fonts/SUITE-Variable-woff2/SUITE-Variable.woff2') format('woff2-variations');
+}
+
+.orderbody_last{
+  font-family: 'SUITE_Variable';
+  display: flex;
+  justify-content: center;
+  p {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  
-    .payment-info {
-      text-align: center;
-      margin-top: 20px;
-  
-      h2 {
-        font-size: 24px;
-        margin-bottom: 10px;
-      }
-  
-      p {
-        font-size: 16px;
-        margin: 5px 0;
-      }
-  
-      ul {
-        list-style-type: none;
-        padding: 0;
-  
-        li {
-          font-size: 14px;
-          margin: 5px 0;
-        }
-      }
-    }
+    justify-content: space-between;
   }
+}

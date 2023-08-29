@@ -4,6 +4,9 @@ import queryString from 'query-string'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCount } from '../store';
+import jwtDecode from 'jwt-decode';
+import "./style/PayResult.scss"
+import { useNavigate } from 'react-router-dom';
 
 function PayResult() {
 
@@ -29,19 +32,22 @@ function PayResult() {
 
   const config = useSelector((state) => state.config)
   
+  const jwtToken = localStorage.getItem('jwtToken');
+  const decoded = jwtDecode(jwtToken);
 
   let number = {
+    "memberId": decoded.id,
     "productIds" : ""
   }
 
+  const [response, setResponse] = useState({});
+  
   const pay = async (state, callback) => {
     let kakaoToken = await axios.post(
       "/api3/payment/approve",
       state,
       kakaoConfig
     );
-
-    let response = {}
     
     if (kakaoToken.status === 200) {
       //console.log('kakao token data print11!!', kakaoToken.data);
@@ -49,8 +55,10 @@ function PayResult() {
       console.log('kakao token data print11!!', kakaoToken.data);
       console.log(2, kakaoToken.data.item_code)
       number.productIds = kakaoToken.data.item_code
-      response = kakaoToken.data
-      console.log(3, response)
+      setResponse(kakaoToken.data, ()=>{
+        console.log(3, response)
+      })
+      
       // setCart(response.data, () => {
       //   console.log(cart)
       // });
@@ -69,7 +77,7 @@ function PayResult() {
       `http://localhost:8080/create_orderProduct?quantity=${encodeURIComponent(quantity)}`,
       number,
       config
-      );
+    );
       
       if (response.status === 200) {
         //console.log('kakao token data print11!!', kakaoToken.data);
@@ -88,9 +96,11 @@ function PayResult() {
 
     let [cart, setCart] = useState([]);
 
+    let navigate = useNavigate();
+
     const getCart = async () => {
       let response = await axios.get(
-        `http://localhost:8080/select_cart/`,
+        `http://localhost:8080/select_cart?memberId=${encodeURIComponent(decoded.id)}`,
         config
       );
       if (response.status === 200) {
@@ -108,12 +118,12 @@ function PayResult() {
     }, []); 
 
   return (
-    <div>
+    <div className='orderbody_last' style={{ margin: "6rem" }}>
         <div>
-          <h2>결제가 완료되었습니다.</h2>
-          <p>Payment ID:</p>
-          <p>Amount:</p>
-          <p>결제 상품</p>
+          <h2 style={{ margin: '2rem' }}>결제가 완료되었습니다.</h2>
+          <p>결제 날짜 : {response.approved_at}</p>
+          <p>Payment ID: {response.cid}</p>
+          <p>결제 상품: {response.item_name}</p>
           {/* <Button>홈</Button>
           <Button>마이페이지</Button> */}
         </div>

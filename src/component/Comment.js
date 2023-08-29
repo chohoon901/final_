@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import './style/Comment.scss'
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
+import jwtDecode from 'jwt-decode';
 
 
 
@@ -10,7 +12,46 @@ function Comment(props) {
     // let server = useSelector((state) => {
     //     return state
     // })
+
+    const jwtToken = localStorage.getItem('jwtToken');
+  
+    let naviagete = useNavigate();
+
+    const [decodedToken, setDecodedToken] = useState(null);
+
+    useEffect(() => {
+      if (jwtToken) {
+        try {
+          const decoded = jwtDecode(jwtToken);
+          setDecodedToken(decoded);
+          console.log('Decoded Token:', decoded.id);
+        } catch (error) {
+          console.error('올바른 토큰이 아닙니다', error);
+        }
+      } else {
+        alert('로그인 해주세요!');
+        naviagete("/login");
+      }
+    }, []);
+
+    const [user, setUser] = useState({
+      id: decodedToken ? decodedToken.id : '',
+      username: decodedToken ? decodedToken.username : ''
+    });
+
+    useEffect(() => {
+      if (decodedToken) {
+        setComment(prevUser => ({
+          ...prevUser,
+          "memberId": decodedToken.id
+        }));
+      }
+    }, [decodedToken]);
+
+    // -----------------------------
+
     let [comment, setComment] = useState({ 
+      "memberId" : decodedToken ? decodedToken.id : '',
       "body" : ""
     });
 

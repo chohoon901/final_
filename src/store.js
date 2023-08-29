@@ -114,6 +114,18 @@ let special = createSlice({
   }
 })
 
+let isExist = createSlice({
+  name : 'Like',
+  initialState : false,
+  reducers : {
+      setIsExist(state, action) {
+        return action.payload; // API에서 받아온 데이터로 상태를 업데이트
+      }
+  }
+})
+
+export let { setIsExist } = isExist.actions
+
 export let { setSpecial } = special.actions
 
 export let { setDataSlice } = dataSlice.actions
@@ -139,6 +151,7 @@ reducer: {
   inputValue : inputValue.reducer,
   change : change.reducer,
   dataSlice : dataSlice.reducer,
-  special : special.reducer
+  special : special.reducer,
+  isExist : isExist.reducer
 }
 })

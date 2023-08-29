@@ -3,8 +3,8 @@ import './style/Detail.scss'
 import { useEffect, useState } from "react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 import { useNavigate } from 'react-router-dom';
-import { data } from "../data";
 import moment from 'moment';
+import jwtDecode from 'jwt-decode';
 
 import calculateTimeRemaining from "./calculateTimeRemaining";
 import Comment from "../component/Comment";
@@ -38,6 +38,43 @@ function Detail() {
       "Authorization" : localStorage.getItem("jwtToken")
     }
   };
+
+  const jwtToken = localStorage.getItem('jwtToken');
+  
+let naviagete = useNavigate();
+  
+const [decodedToken, setDecodedToken] = useState(null);
+
+useEffect(() => {
+    if (jwtToken) {
+      try {
+        const decoded = jwtDecode(jwtToken);
+        setDecodedToken(decoded);
+        console.log('Decoded Token:', decoded.id);
+      } catch (error) {
+        console.error('올바른 토큰이 아닙니다', error);
+      }
+    } else {
+      alert('로그인 해주세요!');
+      naviagete("/login");
+    }
+  }, []);
+
+
+const [user, setUser] = useState({
+    id: decodedToken ? decodedToken.id : '',
+    username: decodedToken ? decodedToken.username : ''
+  });
+
+useEffect(() => {
+    if (decodedToken) {
+      setUser(prevUser => ({
+        ...prevUser,
+        id: decodedToken.id,
+        username: decodedToken.username,
+      }));
+    }
+  }, [decodedToken]);
   
 
   let {id} = useParams()
@@ -47,9 +84,12 @@ function Detail() {
   
   let [product, setProduct] = useState({})
 
+  const decoded = jwtDecode(jwtToken);
+
   const getProduct = async () => {
+    console.log(5, decoded)
     let response = await axios.get(
-      `http://localhost:8080/get_product/${id}`,
+      `http://localhost:8080/get_product/${id}?memberId=${encodeURIComponent(decoded.id)}`,
       config
     );
     if (response.status === 200) {
@@ -60,11 +100,12 @@ function Detail() {
   }
 
   const postCart = async () => {
-    console.log(5, quantity)
+    console.log(5, user)
     try {
       let response = await axios.post(
       `http://localhost:8080/create_cart/${id}`,
       {
+        "memberId": user.id,
         "count" : `${quantity}`
       },
       config
@@ -97,12 +138,12 @@ function Detail() {
 
   const addLike = async () => {
     let response = ""
-    console.log(232323, isLike)
+    console.log(232323, user.id)
     if (isLike === false) {
       response = await axios.post(
         `http://localhost:8080/create_mylike/${id}`,
         {
-
+          "memberId": user.id
         },
         config
       );
@@ -113,10 +154,7 @@ function Detail() {
       }
     } else {
       response = await axios.delete(
-        `http://localhost:8080/delete_detail_mylike/${id}`,
-        {
-
-        },
+        `http://localhost:8080/delete_detail_mylike/${id}?memberId=${encodeURIComponent(user.id)}`,
         config
       );
       if (response.status === 200) {

@@ -6,6 +6,7 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from 'react-redux';
 import { addCount, minusCount, setCount } from '../store';
 import { BiUpArrow, BiDownArrow } from "react-icons/bi";
+import jwtDecode from 'jwt-decode';
 
 function Cart() {
 
@@ -16,16 +17,17 @@ function Cart() {
         }
       };
 
-    let {id} = useParams()
-    id = Number(id)
-
     let [cart, setCart] = useState([]);
 
     let dispatch = useDispatch();
 
-    const getCart = async () => {
+    const jwtToken = localStorage.getItem('jwtToken');
+    const decoded = jwtDecode(jwtToken);
+
+    const getCart = async (decoded) => {
+      console.log(333, decoded)
         let response = await axios.get(
-          `http://localhost:8080/select_cart/`,
+          `http://localhost:8080/select_cart?memberId=${encodeURIComponent(decoded.id)}`,
           config
         );
         if (response.status === 200) {
@@ -38,16 +40,16 @@ function Cart() {
       }
 
       useEffect(() => {
-        getCart()
+        getCart(decoded)
+        // console.log(orders)
       }, []);
 
     
     return (
         <div>
             {
-              <CartBody getCart={getCart}></CartBody>
+              <CartBody getCart={()=>{getCart(decoded)}}></CartBody>
             }
-          <button onClick={getCart}>버튼</button>
         </div>
     )
 }
@@ -107,7 +109,7 @@ function CartBody(props) {
     item_name:  `${stockName}외 ${stock.length}종`,
     item_code: "1",
     quantity: 1,
-    total_amount: (total_amount + 2500) / 100,
+    total_amount: parseInt((total_amount + 2500) / 100),
     vat_amount: 0,
     tax_free_amount: 0,
     approval_url: "http://localhost:3000/payresult?quantity=0",

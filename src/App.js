@@ -59,6 +59,7 @@ function App() {
     // 로그아웃 로직 처리 후 로컬 스토리지에서 토큰 삭제 및 로그인 상태 변경
     localStorage.removeItem('jwtToken');
     setIsLoggedIn(false);
+    navigate("/main")
   };
 
   const config = {
@@ -110,6 +111,28 @@ function App() {
     }
   };
 
+  const handleHeartClick = () => {
+    const jwtToken = localStorage.getItem("jwtToken");
+
+    if (jwtToken) {
+      navigate("/mypage/like");
+    } else {
+      alert("로그인 하셔야 합니다!");
+      navigate("/login");
+    }
+  };
+
+  const handleCartClick = () => {
+    const jwtToken = localStorage.getItem("jwtToken");
+
+    if (jwtToken) {
+      navigate("/cart");
+    } else {
+      alert("로그인 하셔야 합니다!");
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="App">
       <header className='navbar'>
@@ -135,14 +158,10 @@ function App() {
           </div>
           <Row>
             <Col>
-              <Link to="/mypage/like">
-                <img src={process.env.PUBLIC_URL + '/img/like.png'}></img>
-              </Link>
+              <img style={{ cursor: "pointer" }} onClick={handleHeartClick} src={process.env.PUBLIC_URL + '/img/like.png'}></img>
             </Col>
             <Col>
-              <Link to="/cart">
-                <img src={process.env.PUBLIC_URL + '/img/cart.png'}></img>
-              </Link>
+              <img style={{ cursor: "pointer" }} onClick={handleCartClick} src={process.env.PUBLIC_URL + '/img/cart.png'}></img>
             </Col>
             <Col>
               <img style={{ cursor: "pointer" }} onClick={handleLinkClick} src={process.env.PUBLIC_URL + '/img/user.png'}></img>

@@ -1,12 +1,17 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from 'react';
 import './style/Like.scss'
 import axios from "axios";
 import Button from '../component/Button';
+import jwtDecode from 'jwt-decode';
+import { useDispatch, useSelector } from "react-redux";
+import { setIsExist } from "../store";
 
 function Like() {
 
-    let [isExist, setIsExist] = useState(true)
+    let dispatch = useDispatch();
+
+    const isExist = useSelector((state) => state.isExist)
 
     const config = {
         headers: {
@@ -14,28 +19,32 @@ function Like() {
           "Authorization" : localStorage.getItem("jwtToken")
         }
       };
-  
-      let {id} = useParams()
-      id = Number(id)
-
 
     let [like, setLike] = useState([]);
 
-    const getLike = async () => {
+    const getLike = async (decoded) => {
+      console.log(22, decoded)
         let response = await axios.get(
-          `http://localhost:8080/select_mylike`,
+          `http://localhost:8080/select_mylike?memberId=${encodeURIComponent(decoded.id)}`,
           config
         );
         if (response.status === 200) {
           console.log(2, response.data);
           if(response.data.length == 0) {
-            setIsExist(false)
+            dispatch(setIsExist(false))
           } else {
-            setIsExist(true)
+            dispatch(setIsExist(true))
           }
           setLike(response.data);
         }
     }
+
+    useEffect(() => {
+      const jwtToken = localStorage.getItem('jwtToken');
+      const decoded = jwtDecode(jwtToken);
+      getLike(decoded)
+      // console.log(orders)
+    }, []);
 
     // const deleteLike = async () => {
     //     let response = await axios.delete(
@@ -47,11 +56,7 @@ function Like() {
     //     }
     // }
 
-    // deleteLike={deleteLike}
-
-    useEffect(()=>{
-      getLike()
-    },[])
+    // deleteLike={deleteLike
     
     return (
         <div className='myLike'>
@@ -63,7 +68,7 @@ function Like() {
                     isExist == true
                     ? <div>
                         <div>
-                        <LikeProduct like={like} getLike={getLike}></LikeProduct>
+                        <LikeProduct like={like} setLike={setLike}></LikeProduct>
                       </div>
                       </div>
                     : <div> 찜한 상품이 존재하지 않습니다 </div>
@@ -77,8 +82,8 @@ function Like() {
 
 function LikeProduct(props) {
 
-
-
+    const jwtToken = localStorage.getItem('jwtToken');
+    const decoded = jwtDecode(jwtToken);
 
   const config = {
     headers: {
@@ -100,6 +105,25 @@ function LikeProduct(props) {
     }
   }
 
+  let dispatch = useDispatch();
+
+  const getLike = async (decoded) => {
+    console.log(22, decoded)
+      let response = await axios.get(
+        `http://localhost:8080/select_mylike?memberId=${encodeURIComponent(decoded.id)}`,
+        config
+      );
+      if (response.status === 200) {
+        console.log(2, response.data);
+        if(response.data.length == 0) {
+          dispatch(setIsExist(false))
+        } else {
+          dispatch(setIsExist(true))
+        }
+        props.setLike(response.data);
+      }
+  }
+
   const cartLike = async (id) => {
     let response = await axios.post(
       `http://localhost:8080/post_mylike_to_cart/`,
@@ -108,6 +132,7 @@ function LikeProduct(props) {
     );
     if (response.status === 200) {
       console.log(response.data[0]);
+      alert("상품이 장바구니에 담겼습니다!")
     }
 }
     // console.log(props.like)
@@ -138,7 +163,7 @@ function LikeProduct(props) {
               <img id={index} src={body.picture} className='like_real'></img>
               <div className='button_container'>
               <button onClick={() => cartLike(body.id)}>장바구니</button>
-              <button onClick={() => deleteLike(body.id, props.getLike)}>삭제</button>
+              <button onClick={() => deleteLike(body.id, ()=> {getLike(decoded)})}>삭제</button>
               </div>
             </div>
           ))

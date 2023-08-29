@@ -4,6 +4,8 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { cancelStatus, setOrders } from '../store';
+import jwtDecode from 'jwt-decode';
+import { useNavigate } from 'react-router';
 
 
 function order() {
@@ -25,9 +27,12 @@ function Orderbody() {
   const orders = useSelector((state) => state.orders)
   const config = useSelector((state) => state.config)
 
-  const getOrder = async () => {
+    
+
+    const getOrder = async (decoded) => {
+      console.log(3333, decoded)
       let response = await axios.get(
-        `http://localhost:8080/find_Orderproducts/`,
+        `http://localhost:8080/find_Orderproducts?memberId=${encodeURIComponent(decoded.id)}`,
         config
       );
       if (response.status === 200) {
@@ -37,7 +42,9 @@ function Orderbody() {
     }
 
     useEffect(() => {
-      getOrder()
+      const jwtToken = localStorage.getItem('jwtToken');
+      const decoded = jwtDecode(jwtToken);
+      getOrder(decoded)
       // console.log(orders)
     }, []);
 

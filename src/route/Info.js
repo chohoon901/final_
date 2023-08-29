@@ -1,12 +1,49 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style/Info.scss'
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
+import jwtDecode from 'jwt-decode';
 
 
 function Info() {
   
+  const jwtToken = localStorage.getItem('jwtToken');
+  
+let naviagete = useNavigate();
+  
+const [decodedToken, setDecodedToken] = useState(null);
+
+useEffect(() => {
+    if (jwtToken) {
+      try {
+        const decoded = jwtDecode(jwtToken);
+        setDecodedToken(decoded);
+        console.log('Decoded Token:', decoded.id);
+      } catch (error) {
+        console.error('올바른 토큰이 아닙니다', error);
+      }
+    } else {
+      alert('로그인 해주세요!');
+      naviagete("/login");
+    }
+  }, []);
+
+
+const [user, setUser] = useState({
+    id: decodedToken ? decodedToken.id : '',
+    username: decodedToken ? decodedToken.username : ''
+  });
+
+useEffect(() => {
+    if (decodedToken) {
+      setUser(prevUser => ({
+        ...prevUser,
+        id: decodedToken.id,
+        username: decodedToken.username,
+      }));
+    }
+  }, [decodedToken]);
   
   const config = {
     headers: {
@@ -23,13 +60,16 @@ function Info() {
     try {
     const response = await axios.post(
       `http://localhost:8080/compare_password`,
-      { password },
+      {
+        memberId: user.id,
+        password: password
+      },
       config
     );
-     if (response.status === 200 && response.data.isPasswordCorrect) {
+     if (response.data === true) {
+      console.log(2, response.data);
       setIsPasswordCorrect(true);
-      // console.log(2, response.headers.Authorization);
-      history('/infoform');
+      history('/mypage/infoform');
      } else {
       setIsPasswordCorrect(false);
       alert("비밀번호가 틀렸습니다, 다시 시도해주세요.")
@@ -38,6 +78,10 @@ function Info() {
 
   }
 };
+
+useEffect(()=>{
+  console.log(password)
+},[password])
 
   return (
     <div className='myinfo'>

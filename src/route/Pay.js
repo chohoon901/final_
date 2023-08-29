@@ -30,7 +30,7 @@ function Pay() {
       item_name: name,
       item_code: "1",
       quantity: quantity,
-      total_amount: price,
+      total_amount: parseInt(price),
       vat_amount: 0,
       tax_free_amount: 0,
       approval_url: `http://localhost:3000/payresult?quantity=${encodeURIComponent(quantity)}`,
@@ -67,36 +67,10 @@ function Pay() {
 
   let [product, setProduct] = useState(request)
 
-  // const config = {
-  //   headers: {
-  //     "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
-  //     "Authorization" : localStorage.getItem("jwtToken")
-  //   }
-  // };
-  
-  // const pay = async (request) => {
-  //   //console.log(...request)
-    
-  //   let kakaoToken = await Axios.post(
-  //     "http://localhost:8080/payment/ready",
-  //     ...request,
-  //     config
-  //   );
-    
-  //   if (kakaoToken.status === 200) {
-  //     //console.log('kakao token data print11!!', kakaoToken.data);
-  //     //localStorage.setItem("jwtToken", kakaoToken.data);
-  //     alert("결제 하려고 하고 있음");
-  //     const url = kakaoToken.data.next_redirect_pc_url
-  //     window.location.replace(url);
-  //     alert("결제 결과!!=", kakaoToken);
-  //   }
-  // }
-
   return (
   <div>
     <Product name={name} picture={picture} quantity={quantity} price={price} id={id} state={state}></Product>
-    <button onClick={() => {pay(state)}}>결제하기</button>
+    <button className='paybutton' onClick={() => {pay(state)}}>결제하기</button>
   </div>
   )
 }
@@ -110,12 +84,12 @@ function Product({ name, picture, quantity, price, id ,state }) {
   return (
     <div className='container myPay'>
       <div className='header'>
-          <h1>장바구니</h1>
+          <h1>결제</h1>
       </div>
       <div className='pay_body'>
         <div style={{ display: 'none' }}>{id}</div>
         <div className='cart_real'>{truncate(name, 30)}</div>
-        <div className='cart_real'>{ price }</div> 
+        <div className='cart_real'>{ parseInt(price).toLocaleString('ko-KR') }₩</div> 
         <img src={picture} className='cart_real'></img>
         <div className="cart_real">
           <div style={{ display: 'flex', justifyContent: "center",width:'300px'}}>

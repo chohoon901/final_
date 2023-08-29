@@ -112,7 +112,7 @@ function TabContent({special, dataSlice}) {
   };
 
     return (
-      <div>
+      <div style={{ padding: 0 }}>
         <div className='content'>
           <div className='row row-cols-4'>
             {
