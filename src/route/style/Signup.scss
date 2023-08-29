@@ -15,7 +15,7 @@
     margin-bottom: 60px;
     border-bottom: 2px solid rgb(51, 51, 51);
     padding-bottom: 40px;
-    width: 35%;
+    width: 40%;
     box-sizing: border-box;
   }
   
@@ -25,15 +25,13 @@
     color: rgb(51, 51, 51);
   }
   
-  .form {
-    width: 600px;
-    padding: 40px;
+
+  
+  .formGroup {
+    width: 600px; 
     // border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #fff;
-  }
-  
-  .formGroup {
     display: flex;
     align-items: center;
     margin-bottom: 30px;

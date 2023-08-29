@@ -80,12 +80,13 @@ function InfoForm() {
   const patchInfo = async (request) => {
     console.log(request)
     let response = await axios.patch(
-      `http://localhost:8080/update_member/`,
+      `/api4/update_member/`,
       request,
       config
     );
     if (response.status === 200) {
       console.log(2,2);
+      alert("정보 변경이 완료되었습니다.")
       naviagete("/main")
     }
 }

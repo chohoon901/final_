@@ -74,7 +74,7 @@ function PayResult() {
   const saveOrder = async (number, callback) => {
     console.log(4, number)
     let response = await axios.post(
-      `http://localhost:8080/create_orderProduct?quantity=${encodeURIComponent(quantity)}`,
+      `/api4/create_orderProduct?quantity=${encodeURIComponent(quantity)}`,
       number,
       config
     );
@@ -100,7 +100,7 @@ function PayResult() {
 
     const getCart = async () => {
       let response = await axios.get(
-        `http://localhost:8080/select_cart?memberId=${encodeURIComponent(decoded.id)}`,
+        `/api4/select_cart?memberId=${encodeURIComponent(decoded.id)}`,
         config
       );
       if (response.status === 200) {

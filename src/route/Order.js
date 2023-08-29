@@ -32,7 +32,7 @@ function Orderbody() {
     const getOrder = async (decoded) => {
       console.log(3333, decoded)
       let response = await axios.get(
-        `http://localhost:8080/find_Orderproducts?memberId=${encodeURIComponent(decoded.id)}`,
+        `/api4/find_Orderproducts?memberId=${encodeURIComponent(decoded.id)}`,
         config
       );
       if (response.status === 200) {
@@ -54,10 +54,13 @@ function Orderbody() {
 
     let [delivery, setDelivery] = useState([])
 
-    const cancleOrder = async (orderId) => {
+    const jwtToken = localStorage.getItem('jwtToken');
+    const decoded = jwtDecode(jwtToken);
+
+    const cancleOrder = async (orderId, callback) => {
       console.log(1, orderId);
       let response = await axios.patch(
-        `http://localhost:8080/updateStatus`,
+        `/api4/updateStatus`,
         {
           "orderItemId": orderId
         },
@@ -68,13 +71,19 @@ function Orderbody() {
         setDelivery(prevDelivery => prevDelivery.map((status, index) =>
           index === orderId ? false : status
         ));
+        if(callback) {
+          callback()
+        }
       }
     }
 
     const handleCancel = (orderId) => {
-      cancleOrder(orderId); // 주문 취소 처리 함수 호출
-      // setOrders를 사용하여 주문 목록 업데이트
-      dispatch(cancelStatus(orderId))
+      cancleOrder(orderId, () => {
+        // 취소 함수 수행 후 주문 목록 업데이트
+        dispatch(cancelStatus(orderId));
+        // getOrder 함수를 호출하여 업데이트된 주문 목록 다시 가져오기
+        getOrder(decoded);
+      });
     };
 
   return (

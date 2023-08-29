@@ -30,7 +30,7 @@ function List(props) {
 
     const bestSub = async () => {
       let response = await axios.post(
-        `http://localhost:8080/best_subCategory/`,
+        `/api4/best_subCategory/`,
         special,
         config
       );

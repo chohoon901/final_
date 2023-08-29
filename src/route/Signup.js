@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../route/style/Signup.scss';
 import Button from '../component/Button';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 export default function Signup() {
 
@@ -14,14 +15,13 @@ export default function Signup() {
 
   
   const [memberData, setmemberData] = useState({
-    id: "",
     address: "",
     name: "",
     password: "",
     phone: "",
+    username: "",
     provider: "",
-    provider_id: "",
-    username: ""
+    provider_id: ""
   });
 
 
@@ -29,23 +29,22 @@ export default function Signup() {
       const { name, value } = event.target;
       setmemberData((prevData) => ({
         ...prevData,
-        [name]: value,
-        username: value,  
-        address: value,   
-        name: value,      
-        password: value,  
-        phone: value      
+        [name]: value     
       }));
+      console.log(1212, memberData)
     };
+
+    let navigate = useNavigate()
   
   const postJoin = async () => {
+    console.log(2222, memberData)
     let response = await axios.post(
-      `http://localhost:8080/join`,
+      `/api4/join`,
       JSON.stringify(memberData),
       config
     );
     if (response.status === 200) {
-      console.log(2, response.data[0]);
+      navigate("/main")
     }
   }
 
@@ -54,11 +53,10 @@ export default function Signup() {
       <div className='header'>
         <h1>회원가입</h1>
       </div>
-      <form className='form'>
         <div className='formGroup'>
-          <label htmlFor="id">아이디</label>
+          <label htmlFor="username">아이디</label>
           <input
-            name="id"
+            name="username"
             required
             placeholder="아이디를 입력해주세요"
             type="text"
@@ -76,29 +74,21 @@ export default function Signup() {
           />
         </div>
         <div className='formGroup'>
-          <label htmlFor="checkpassword">비밀번호 확인</label>
+          <label htmlFor="address">주소</label>
           <input
-            name="checkpassword"
+            name="address"
             required
-            placeholder="비밀번호를 다시 입력해주세요"
-            type="password"
-            onChange={handleInputChange}
-          />
-        </div>
-        <div className='formGroup'>
-          <label htmlFor="password">주소</label>
-          <input
-            name="adress"
-            required
+            type="text"
             placeholder="주소를 입력해주세요"
             onChange={handleInputChange}
           />
         </div>
         <div className='formGroup'>
-          <label htmlFor="displayName">이름</label>
+          <label htmlFor="name">이름</label>
           <input
-            name="displayName"
+            name="name"
             required
+            type="text"
             placeholder="이름을 입력해주세요"
             onChange={handleInputChange}
           />
@@ -114,9 +104,8 @@ export default function Signup() {
           />
         </div>
         <section className='btn'>
-          <Button onClick={postJoin} name="가입하기" form="signup" type="submit" isPurple={true} width="100%" />
+          <Button onClick={postJoin} name="가입하기" form="signup" isPurple={true} width="100%" />
         </section>
-      </form>
     </div>
   );
 }

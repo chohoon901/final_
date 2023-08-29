@@ -27,7 +27,7 @@ function Cart() {
     const getCart = async (decoded) => {
       console.log(333, decoded)
         let response = await axios.get(
-          `http://localhost:8080/select_cart?memberId=${encodeURIComponent(decoded.id)}`,
+          `/api4/select_cart?memberId=${encodeURIComponent(decoded.id)}`,
           config
         );
         if (response.status === 200) {
@@ -74,7 +74,7 @@ function CartBody(props) {
 
   const deleteCart = async (params, callback) => {
     let response = await axios.delete(
-      `http://localhost:8080/delete_cart?id=${params}`,
+      `/api4/delete_cart?id=${params}`,
       config
     );
     if (response.status === 200) {
@@ -146,7 +146,7 @@ function CartBody(props) {
 
   const plusCountaxios = async (request) => {
     let response = await axios.patch(
-      "http://localhost:8080/update_cart",
+      "/api4/update_cart",
       {
         id: request,
         updown: 1
@@ -157,7 +157,7 @@ function CartBody(props) {
 
   const deleteCountaxios = async (request) => {
     let response = await axios.patch(
-      "http://localhost:8080/update_cart",
+      "/api4/update_cart",
       {
         id: request,
         updown: 0

@@ -25,7 +25,7 @@ function Like() {
     const getLike = async (decoded) => {
       console.log(22, decoded)
         let response = await axios.get(
-          `http://localhost:8080/select_mylike?memberId=${encodeURIComponent(decoded.id)}`,
+          `/api4/select_mylike?memberId=${encodeURIComponent(decoded.id)}`,
           config
         );
         if (response.status === 200) {
@@ -94,7 +94,7 @@ function LikeProduct(props) {
 
   const deleteLike = async (id, callback) => {
     let response = await axios.delete(
-      `http://localhost:8080/delete_mylike/?id=${encodeURIComponent(id)}`,
+      `/api4/delete_mylike/?id=${encodeURIComponent(id)}`,
       config
     );
     if (response.status === 200) {
@@ -110,7 +110,7 @@ function LikeProduct(props) {
   const getLike = async (decoded) => {
     console.log(22, decoded)
       let response = await axios.get(
-        `http://localhost:8080/select_mylike?memberId=${encodeURIComponent(decoded.id)}`,
+        `/api4/select_mylike?memberId=${encodeURIComponent(decoded.id)}`,
         config
       );
       if (response.status === 200) {
@@ -126,7 +126,7 @@ function LikeProduct(props) {
 
   const cartLike = async (id) => {
     let response = await axios.post(
-      `http://localhost:8080/post_mylike_to_cart/`,
+      `/api4/post_mylike_to_cart/`,
       { id },
       config
     );

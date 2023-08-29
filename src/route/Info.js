@@ -59,7 +59,7 @@ useEffect(() => {
   const passwordCorrection = async () => {
     try {
     const response = await axios.post(
-      `http://localhost:8080/compare_password`,
+      `/api4/compare_password`,
       {
         memberId: user.id,
         password: password

@@ -40,7 +40,7 @@ function Search() {
     
     const getAllProduct = async () => {
         const response = await axios.get(
-        `http://localhost:8080/product_search?keyword=${encodeURIComponent(keyword)}`,
+        `/api4/product_search?keyword=${encodeURIComponent(keyword)}`,
         config // 설정에 따라 수정
       );
       if (response.status === 200) {
@@ -60,7 +60,7 @@ function Search() {
       recommend_text.input_word = request;
       console.log(1123123, recommend_text);
       let response = await axios.post(
-        `http://localhost:8080/recommend_search`,
+        `/api4/recommend_search`,
         recommend_text,
         config
       );

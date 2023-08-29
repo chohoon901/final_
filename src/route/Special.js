@@ -29,7 +29,7 @@ function Special() {
 
   const getAllProduct = async () => {
     let response = await axios.get(
-      `http://localhost:8080/get_products/`,
+      `/api4/get_products/`,
 
       config
     );

@@ -45,11 +45,11 @@ module.exports = function (app) {
   )
 
   app.use(
-    createProxyMiddleware('/spring', {
+    createProxyMiddleware('/api4', {
       target: 'http://localhost:8080', // API endpoint 1
       changeOrigin: true,
       pathRewrite: {
-        "^/spring": "",
+        "^/api4": "",
       },
       headers: {
         Connection: "keep-alive"

@@ -33,28 +33,28 @@ export default function Login () {
   const responseLogin = async (response) => {
     console.log(1, response);
     let jwtToken = await Axios.post(
-      "http://localhost:8080/login",
+      "/api4/login",
       JSON.stringify(response),
       config
     );
     if (jwtToken.status === 200) {
       console.log(2, jwtToken.headers.authorization);
       localStorage.setItem("jwtToken", jwtToken.headers.authorization);
-      window.location.replace("http://localhost:3000/main")
+      window.location.replace("/main")
     }
   }
   
   const responseGoogle = async (response) => {
     console.log(1, response);
     let jwtToken = await Axios.post(
-      "http://localhost:8080/oauth/jwt/google",
+      "/api4/oauth/jwt/google",
       JSON.stringify(response),
       config
     );
     if (jwtToken.status === 200) {
       console.log(2, jwtToken.data);
       localStorage.setItem("jwtToken", jwtToken.data);
-      window.location.replace("http://localhost:3000/main")
+      window.location.replace("/main")
     }
   };
 

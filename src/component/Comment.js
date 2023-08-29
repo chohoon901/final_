@@ -71,7 +71,7 @@ function Comment(props) {
     const requestComment = async (request, callback) => {
         console.log(1, request);
         let response = await axios.post(
-          `http://localhost:8080/create_comment/${props.id}`,
+          `/api4/create_comment/${props.id}`,
           JSON.stringify(request),
           config
         );
@@ -88,7 +88,7 @@ function Comment(props) {
 
       const getComments = async () => {
         let response = await axios.get(
-          `http://localhost:8080/show_comments/${props.id}`,
+          `/api4/show_comments/${props.id}`,
           config
         );
         if (response.status === 200) {
@@ -97,26 +97,6 @@ function Comment(props) {
           setComments(extractedBodies);
         }
       }
-
-      const deleteComment = async () => {
-        let response = await axios.delete(
-          `http://localhost:8080/delete_comment/`,
-          config
-        );
-        if (response.status === 200) {
-          console.log(2, response.data[0]);
-        }
-    }
-
-      const patchComment = async () => {
-        let response = await axios.patch(
-          `http://localhost:8080/update_comment/`,
-          config
-        );
-        if (response.status === 200) {
-          console.log(2, response.data[0]);
-        }
-    }
 
       useEffect(() => {
         getComments();
@@ -131,8 +111,6 @@ function Comment(props) {
           style={{ width: '55%', textAlign: 'left', padding: '10px', marginRight: '10px' }}
           onChange={saveComment}></input>
           <button className='buttonDetail' onClick={() => requestComment(comment, getComments)}>작성</button>
-          <button className='buttonDetail' onClick={deleteComment}>삭제</button>
-          <button className='buttonDetail' onClick={patchComment}>수정</button>
       </div>
       <div className='comment_header'>
         {/* <button onClick={getComments}>조회</button> */}

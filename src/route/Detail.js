@@ -89,7 +89,7 @@ useEffect(() => {
   const getProduct = async () => {
     console.log(5, decoded)
     let response = await axios.get(
-      `http://localhost:8080/get_product/${id}?memberId=${encodeURIComponent(decoded.id)}`,
+      `/api4/get_product/${id}?memberId=${encodeURIComponent(decoded.id)}`,
       config
     );
     if (response.status === 200) {
@@ -103,7 +103,7 @@ useEffect(() => {
     console.log(5, user)
     try {
       let response = await axios.post(
-      `http://localhost:8080/create_cart/${id}`,
+      `/api4/create_cart/${id}`,
       {
         "memberId": user.id,
         "count" : `${quantity}`
@@ -141,7 +141,7 @@ useEffect(() => {
     console.log(232323, user.id)
     if (isLike === false) {
       response = await axios.post(
-        `http://localhost:8080/create_mylike/${id}`,
+        `/api4/create_mylike/${id}`,
         {
           "memberId": user.id
         },
@@ -154,7 +154,7 @@ useEffect(() => {
       }
     } else {
       response = await axios.delete(
-        `http://localhost:8080/delete_detail_mylike/${id}?memberId=${encodeURIComponent(user.id)}`,
+        `/api4/delete_detail_mylike/${id}?memberId=${encodeURIComponent(user.id)}`,
         config
       );
       if (response.status === 200) {
