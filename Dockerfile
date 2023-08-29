@@ -1,26 +1,18 @@
-# nginx 이미지를 사용합니다. 뒤에 tag가 없으면 latest 를 사용합니다.
-FROM nginx
+# 이미지의 베이스로 사용할 Node.js 이미지 선택
+FROM node:14-alpine
 
-# root 에 app 폴더를 생성
-RUN mkdir /app
-
-# work dir 고정
+# 앱 디렉토리 생성 및 작업 디렉토리로 설정
 WORKDIR /app
 
-# work dir 에 build 폴더 생성 /app/build
-RUN mkdir ./build
+# 프로젝트의 package.json과 package-lock.json 복사하여 종속성 설치
+COPY package*.json ./
+RUN npm install
 
-# host pc의 현재경로의 build 폴더를 workdir 의 build 폴더로 복사
-ADD ./build ./build
+# 소스 코드 복사
+COPY . .
 
-# nginx 의 default.conf 를 삭제
-RUN rm /etc/nginx/conf.d/default.conf
+# 앱 빌드
+RUN npm run build
 
-# host pc 의 nginx.conf 를 아래 경로에 복사
-COPY ./nginx.conf /etc/nginx/conf.d
-
-# 80 포트 오픈
-EXPOSE 80
-
-# container 실행 시 자동으로 실행할 command. nginx 시작함
-CMD ["nginx", "-g", "daemon off;"]
+# 앱 실행을 위한 명령어 설정
+CMD ["npm", "start"]
