@@ -149,7 +149,11 @@ function App() {
           </section>
         </Container>
         <Container>
-          <Navbar.Brand href="#home">SummerMart</Navbar.Brand>
+          <Navbar.Brand href="/main">
+            <div className="bg-crop">
+              <img className="bg-cat" src={process.env.PUBLIC_URL + '/img/circle_logo_2.png'}></img>
+            </div>
+          </Navbar.Brand>
           <div className='searchContainer'>
           <input className='searchInput' value={inputValue} onChange={(e) => {handleInputChange(e)}} type="text" placeholder="검색어를 입력해 주세요" onKeyDown={(e) => {handleKeyDown(e)}}></input>
           <Link to={`/search/${inputValue}`} className="searchIcon">

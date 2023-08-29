@@ -105,12 +105,6 @@ return (
                       }}
                     />
                   </GoogleOAuthProvider>
-                  <img src={process.env.PUBLIC_URL + '/img/naver1.png'}
-                    alt="Naver Logo"
-                    className='logoImage'  style={{display:"inline", margin:"10px"}} />
-                  <img src={process.env.PUBLIC_URL + '/img/kakao.png'}
-                    alt="Kakao Logo"
-                    className='logoImage' style={{display:"inline", margin:"10px"}} />
             </div>
           </section>
       </section>

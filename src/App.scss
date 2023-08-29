@@ -4,6 +4,20 @@
 	src: url('./fonts/SUITE-Variable-woff2/SUITE-Variable.woff2') format('woff2-variations');
 }
 
+.bg-crop {
+  position: relative;
+  width: 70px; // 자를 사이즈를 명시해준다.
+  height: 70px;
+
+  .bg-cat {
+    position: absolute; // 포지션을 주고,
+    top: 10%; 		  // 보이기 원하는 위치를 지정
+    left: -10%;
+    // width: 199px; // 오리지널 사이즈
+    // height: 141px;
+  }
+}
+
 .images {
   display: flex;
   justify-content: center;
