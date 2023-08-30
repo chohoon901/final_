@@ -123,7 +123,7 @@ function TabContent({special, dataSlice}) {
                     <img src={body.picture} alt={body.name} style={{ width: '200px', height: '200px' }} />
                     <div className='content_body'>
                       <div className='h5_body'>
-                        <h5 className='discount-price' style={{ alignItems: 'center' }}>{truncate(body.name, 60)}</h5>
+                        <h5 className='discount-price' style={{ alignItems: 'center' }}>{truncate(body.name, 40)}</h5>
                       </div>
                       <div className='h5_body' style={{ marginTop: 'auto', marginBottom: '10px' }}>
                         <p className={body.disc === 0 ? "discount-price" : "original-price"}>{`${body.price.toLocaleString('ko-KR')}₩`}</p>

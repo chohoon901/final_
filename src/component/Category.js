@@ -45,7 +45,7 @@ const config = {
         dispatch(setSpecial(updatedSpecial));
         console.log(special)
         let response = await axios.post(
-          `http://localhost:8080/best_subCategory/`,
+          `/api4/best_subCategory/`,
           updatedSpecial,
           config
         );
