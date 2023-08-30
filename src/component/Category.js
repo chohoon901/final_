@@ -52,7 +52,6 @@ const config = {
         if (response.status === 200) {
             console.log(response.data)
             dispatch(setDataSlice(response.data))
-            // window.location.reload()
         }
       }
 
