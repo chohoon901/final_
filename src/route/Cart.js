@@ -112,9 +112,9 @@ function CartBody(props) {
     total_amount: parseInt((total_amount + 2500) / 100),
     vat_amount: 0,
     tax_free_amount: 0,
-    approval_url: "http://localhost:3000/payresult?quantity=0",
-    fail_url: "http://localhost:3000/payresult?product=788&member=44&pay=fail",
-    cancel_url: "http://localhost:3000/payresult?product=788&member=4&pay=cencel"
+    approval_url: "http://13.209.116.8:3000/payresult?quantity=0",
+    fail_url: "http://13.209.116.8:3000/payresult?product=788&member=44&pay=fail",
+    cancel_url: "http://13.209.116.8:3000/payresult?product=788&member=4&pay=cencel"
   }
 
   const kakaoConfig = {
